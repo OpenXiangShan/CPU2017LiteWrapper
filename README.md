@@ -35,3 +35,6 @@ make build_allr -j 70
 ```
 bash scripts/collect.sh
 ```
+
+# Reference
+- https://github.com/OpenXiangShan/CPU2006LiteWrapper
