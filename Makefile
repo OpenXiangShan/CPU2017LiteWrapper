@@ -6,6 +6,17 @@ SPECINTSPEED=600.perlbench_s 602.gcc_s 605.mcf_s 620.omnetpp_s 623.xalancbmk_s 6
 ARCH ?= riscv64
 export ARCH
 
+ifeq ($(SPEC),)
+$(error ERROR: enviroment variable SPEC is not defined)
+endif
+
+ifeq ($(SPEC_LITE),)
+$(error ERROR: enviroment variable SPEC_LITE is not defined)
+endif
+
+create_log_dir = @mkdir -p $*/logs
+TIMESTAMP := $(shell date +%Y%m%d_%H%M%S)
+
 copy_fp_%:
 	@echo "Copying source files for FP target: $*"
 	@$(MAKE) -s -C $* copy-src
