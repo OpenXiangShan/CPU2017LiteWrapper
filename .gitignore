@@ -1,5 +1,6 @@
 **/src
 **/build
 **/*_s
-**/scripts
+scripts/*
+!scripts/collect.sh
 **/logs
