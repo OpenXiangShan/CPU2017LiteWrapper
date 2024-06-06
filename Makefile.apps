@@ -1,0 +1,133 @@
+SPEC ?=
+#include $(SPEC_LITE)/scripts/$(ARCH).mk
+
+WORK_DIR = .
+DST_DIR = $(WORK_DIR)/build
+$(shell mkdir -p $(DST_DIR))
+
+### Files to be linked: object files (`.o`) and libraries (`.a`)
+OBJS := $(patsubst %.F,%.fppized.o,$(SRCS))
+OBJS := $(patsubst %.F90,%.fppized.o,$(OBJS))
+OBJS := $(patsubst %.f90,%.o,$(OBJS))
+OBJS := $(patsubst %.f,%.o,$(OBJS))
+OBJS := $(patsubst %.c,%.o,$(OBJS))
+OBJS := $(patsubst %.C,%.o,$(OBJS))
+OBJS := $(patsubst %.cpp,%.o,$(OBJS))
+OBJS := $(patsubst %.cc,%.o,$(OBJS))
+OBJS := $(addprefix $(DST_DIR)/, $(OBJS))
+
+PREPROCESS_OBJS = $(filter %.F,$(SRCS))
+PREPROCESS_OBJS += $(filter %.F90,$(SRCS))
+PREPROCESS_OBJS := $(patsubst %.F,%.fppized.f, $(PREPROCESS_OBJS))
+PREPROCESS_OBJS := $(patsubst %.F90,%.fppized.f90, $(PREPROCESS_OBJS))
+
+CROSS_COMPILE ?=
+CC  = $(CROSS_COMPILE)gcc
+CXX = $(CROSS_COMPILE)g++
+FC  = $(CROSS_COMPILE)gfortran
+ifeq ($(LD_FORTRAN),1)
+LD = $(FC)
+else ifeq ($(LD_CXX),1)
+LD = $(CXX)
+else
+LD = $(CC)
+endif
+OBJDUMP = $(CROSS_COMPILE)objdump
+OBJCOPY = $(CROSS_COMPILE)objcopy
+READELF = $(CROSS_COMPILE)readelf
+
+COPTIMIZE_FLAGS = -O3
+CXXOPTIMIZE_FLAGS = $(COPTIMIZE_FLAGS)
+FPPTIMIZE_FLAGS = -O3
+
+CFLAGS   += -static -DSPEC -DSPEC_LINUX_X64 -DSPEC_LINUX -std=c99 -mabi=lp64d -MMD -fno-strict-aliasing -Wno-implicit-int -Wno-int-conversion -Wno-incompatible-pointer-types -Wno-implicit-function-declaration -g -O3 -march=rv64gc $(SPECIFIC_FLAG)
+CXXFLAGS += $(CFLAGS)
+FFLAGS  += -static -fallow-argument-mismatch -mabi=lp64d -g -O3 -march=rv64gc -DSPEC -DNDEBUG -DSPEC_AUTO_SUPPRESS_OPENMP -DSPEC_LP64 -DSPEC_LINUX $(SPECIFIC_FLAG)
+LDFLAGS  += -static
+
+$(DST_DIR)/%.o: %.c
+	@mkdir -p $(dir $@) && echo + CC $<
+	@$(CC) $(CFLAGS) -c -o $(abspath $@) $(abspath $<)
+
+### Rule (compile): a single `.C` -> `.o` (g++)
+$(DST_DIR)/%.o: %.C
+	@mkdir -p $(dir $@) && echo + CXX $<
+	@$(CXX) $(CXXFLAGS) -c -o $(abspath $@) $(abspath $<)
+
+### Rule (compile): a single `.cc` -> `.o` (g++)
+$(DST_DIR)/%.o: %.cc
+	@mkdir -p $(dir $@) && echo + CXX $<
+	@$(CXX) $(CXXFLAGS) -c -o $(abspath $@) $(abspath $<)
+
+### Rule (compile): a single `.cpp` -> `.o` (g++)
+$(DST_DIR)/%.o: %.cpp
+	@mkdir -p $(dir $@) && echo + CXX $<
+	@$(CXX) $(CXXFLAGS) -c -o $(abspath $@) $(abspath $<)
+
+### Rule (compile): a single `.f` -> `.o` (gfortran)
+$(DST_DIR)/%.o: %.f
+	@mkdir -p $(dir $@) && echo + FC $<
+	@cd $(dir $<) && $(FC) $(FFLAGS) -c -o $(abspath $@) $(abspath $<)
+
+### Rule (compile): a single `.fppized.f90` -> `.fppized.o` (gfortran)
+$(DST_DIR)/%.fppized.o: %.fppized.f90
+	@mkdir -p $(dir $@) && echo + FC $<
+	@cd $(dir $<) && $(FC) $(FFLAGS) -c -o $(abspath $@) $(abspath $<)
+
+### Rule (compile): a single `.fppized.f` -> `.fppized.o` (gfortran)
+$(DST_DIR)/%.fppized.o: %.fppized.f
+	@mkdir -p $(dir $@) && echo + FC $<
+	@cd $(dir $<) && $(FC) $(FFLAGS) -c -o $(abspath $@) $(abspath $<)
+
+### Rule (compile): a single `.f90` -> `.o` (gfortran)
+$(DST_DIR)/%.o: %.f90
+	@mkdir -p $(dir $@) && echo + FC $<
+	@cd $(dir $<) && $(FC) $(FFLAGS) -c -o $(abspath $@) $(abspath $<)
+
+### Rule (compile): a single `.F90` -> `.fppized.o` (gfortran)
+%.fppized.f90: %.F90
+	@echo + PREPARE $<
+	@cd $(dir $<) && ${SPEC}/bin/specperl ${SPEC}/bin/specpp $(SPECCPPFLAGS) -o $(abspath $@) $(abspath $<)
+
+### Rule (compile): a single `.F` -> `.fppized.o` (gfortran)
+%.fppized.f: %.F
+	@echo + PREPARE $<
+	@cd $(dir $<) && ${SPEC}/bin/specperl ${SPEC}/bin/specpp $(SPECCPPFLAGS) -o $(abspath $@) $(abspath $<)
+	
+#APP_REL = build/$(NAME)_$(patsubst % %, %_%, $(COPTIMIZE_FLAGS))
+#APP     = $(abspath $(APP_REL))
+
+APP_REL = build/$(NAME)
+APP = $(abspath $(APP_REL))
+
+ifeq ($(MAKECMDGOALS),)
+  MAKECMDGOALS  = $(APP)
+  .DEFAULT_GOAL = $(APP)
+endif
+
+$(APP): $(PREPROCESS_OBJS) $(OBJS)
+	@echo + LD "->" $(APP_REL)
+	@$(LD) -o $(abspath $@) $(OBJS) $(LDFLAGS)
+
+.PHONY: clean-src
+clean-src:
+	@rm -rf ./src
+
+.PHONY: copy-src
+copy-src:
+	@cp -r $(SPEC)/benchspec/CPU/$(NAME)/src ./
+	@chmod -R +w src
+
+.PHONY: clean
+clean: clean_preprocess_objs
+	@rm -rf ./build
+
+.PHONY: clean-all
+clean-all: clean clean-src
+
+.PHONY: print_vars
+print_vars:
+	@echo "OBJS $(OBJS)"
+	@echo "PREPROCESS_OBJS $(PREPROCESS_OBJS)"
+
+
