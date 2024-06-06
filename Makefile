@@ -18,36 +18,38 @@ create_log_dir = @mkdir -p $*/logs
 TIMESTAMP := $(shell date +%Y%m%d_%H%M%S)
 
 copy_fp_%:
-	@echo "Copying source files for FP target: $*"
 	@$(MAKE) -s -C $* copy-src
+	@echo "Copying source files for FP target: $*"
 
 copy_int_%:
-	@echo "Copying source files for INT target: $*"
 	@$(MAKE) -s -C $* copy-src
+	@echo "Copying source files for INT target: $*"
 
 build_fp_%:
+	@$(call create_log_dir)
+	@$(MAKE) -s -C $* >> $*/logs/build_fp_$*_$(TIMESTAMP).log 2>&1
 	@echo "Building FP target: $*"
-	@$(MAKE) -s -C $*
 
 build_int_%:
+	@$(call create_log_dir)
+	@$(MAKE) -s -C $* SPECIFIC_FLAG=-ffp-contract=off >> $*/logs/build_fp_$*_$(TIMESTAMP).log 2>&1
 	@echo "Building INT target: $*"
-	@$(MAKE) -s -C $* SPECIFIC_FLAG=-ffp-contract=off
 
 clean_fp_%:
-	@echo "Cleaning FP target: $*"
 	@$(MAKE) -s -C $* clean
+	@echo "Cleaning FP target: $*"
 
 clean_int_%:
-	@echo "Cleaning INT target: $*"
 	@$(MAKE) -s -C $* clean
+	@echo "Cleaning INT target: $*"
 
 clean_src_fp_%:
-	@echo "Cleaning source files for FP target: $*"
 	@$(MAKE) -s -C $* clean-src
+	@echo "Cleaning source files for FP target: $*"
 
 clean_src_int_%:
-	@echo "Cleaning source files for INT target: $*"
 	@$(MAKE) -s -C $* clean-src
+	@echo "Cleaning source files for INT target: $*"
 
 # Define the build and clean targets
 build_fps: $(addprefix build_fp_, $(SPECFPSPEED))
