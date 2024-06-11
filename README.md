@@ -4,7 +4,7 @@
 
 - set SPEC2017 path in env vars
 ``` Makefile
-export SPEC=/spec2006_path
+export SPEC=/spec2017_path
 
 ```
 - set SPEC_LITE env var to the path of this repo
