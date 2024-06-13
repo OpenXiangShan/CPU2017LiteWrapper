@@ -75,7 +75,7 @@ model/EtherHub.cc model/EtherAppCli.cc \
 )
 
 CFLAGS += -Isrc/simulator/platdep -Isrc/simulator -Isrc/model -DWITH_NETBUILDER -DSPEC_AUTO_SUPPRESS_OPENMP
-CXXFLAGS +=
+CXXFLAGS += -fpermissive -std=c++03 -fno-strict-aliasing
 FFLAGS +=
 LD_CXX = 1
 include $(SPEC_LITE)/Makefile.apps
