@@ -45,6 +45,11 @@ CXXFLAGS += $(CFLAGS)
 FFLAGS  += -static -fallow-argument-mismatch -mabi=lp64d -g -O3 -march=rv64gc_zba_zbb_zbc_zbs -DSPEC -DNDEBUG -DSPEC_AUTO_SUPPRESS_OPENMP -DSPEC_LP64 -DSPEC_LINUX $(SPECIFIC_FLAG)
 LDFLAGS  += -static
 
+JEMALLOC_LIBS :=
+ifeq ($(LD_JEMALLOC),1)
+JEMALLOC_LIBS += $(RISCV)/lib/libjemalloc.a -lm -pthread
+endif
+
 $(DST_DIR)/%.o: %.c
 	@mkdir -p $(dir $@) && echo + CC $<
 	@$(CC) $(CFLAGS) -c -o $(abspath $@) $(abspath $<)
@@ -107,7 +112,7 @@ endif
 
 $(APP): $(PREPROCESS_OBJS) $(OBJS)
 	@echo + LD "->" $(APP_REL)
-	@$(LD) -o $(abspath $@) $(OBJS) $(LDFLAGS)
+	@$(LD) -o $(abspath $@) $(OBJS) $(LDFLAGS) $(JEMALLOC_LIBS)
 
 .PHONY: clean-src
 clean-src:
