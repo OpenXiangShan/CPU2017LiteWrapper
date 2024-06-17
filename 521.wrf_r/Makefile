@@ -145,13 +145,12 @@ z1fm1b.F90 z1fm1f.F90 zmf2kb.F90 zmf2kf.F90 zmf3kb.F90 zmf3kf.F90 \
 zmf4kb.F90 zmf4kf.F90 zmf5kb.F90 zmf5kf.F90 zmfgkb.F90 zmfgkf.F90 \
 )
 
-
-CFLAGS += -DSPEC -DNDEBUG -Isrc -Isrc/netcdf/include -Isrc/inc -DSTUBMPI -DSPEC_AUTO_SUPPRESS_OPENMP -DSPEC_AUTO_BYTEORDER=0x12345678 -DSPEC_CASE_FLAG -DSPEC_LP64
-CXXFLAGS +=
-FFLAGS += -I. -Inetcdf/include -Iinc -DSTUBMPI -DSPEC_AUTO_SUPPRESS_OPENMP -fconvert=big-endian -ffree-line-length-none -fallow-invalid-boz
+SPEC_CFLAGS += -DSPEC -DNDEBUG -Isrc -Isrc/netcdf/include -Isrc/inc -DSTUBMPI -DSPEC_AUTO_SUPPRESS_OPENMP -DSPEC_AUTO_BYTEORDER=0x12345678 -DSPEC_CASE_FLAG -DSPEC_LP64
+SPEC_CXXFLAGS +=
+SPEC_FFLAGS += -I. -Inetcdf/include -Iinc -DSTUBMPI -DSPEC_AUTO_SUPPRESS_OPENMP -fconvert=big-endian -ffree-line-length-none -fallow-invalid-boz
 SPECCPPFLAGS += -DSPEC -DNDEBUG -DSTUBMPI -DSPEC_AUTO_SUPPRESS_OPENMP -w -m literal.pm -I. -I./inc -I./netcdf/include -DDM_PARALLEL -DEM_CORE=1 -DNMM_CORE=0 -DNMM_MAX_DIM=2600 -DCOAMPS_CORE=0 -DDA_CORE=0 -DEXP_CORE=0 -DIWORDSIZE=4 -DDWORDSIZE=8 -DRWORDSIZE=4 -DLWORDSIZE=4 -DNETCDF -DINTIO -DCONFIG_BUF_LEN=32768 -DMAX_DOMAINS_F=21 -DNMM_NEST=0 -DMAX_HISTORY=25 -DSPEC_AUTO_SUPPRESS_OPENMP -DSPEC_LP64
 LD_FORTRAN = 1
-LDFLAGS = -fconvert=big-endian
+SPEC_LDFLAGS = -fconvert=big-endian
 
 include $(SPEC_LITE)/Makefile.apps
 .PHONY: clean_preprocess_objs

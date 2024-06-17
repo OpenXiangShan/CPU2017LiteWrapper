@@ -27,10 +27,10 @@ wand/magick-wand.c wand/mogrify.c wand/pixel-wand.c \
 wand/magick-property.c wand/pixel-iterator.c wand/wand.c \
 magick/deprecate.c \
 )
-CFLAGS += -Isrc -DSPEC_AUTO_SUPPRESS_OPENMP
-CXXFLAGS +=
-FFLAGS +=
-LDFLAGS += -lm
+SPEC_CFLAGS += -Isrc -DSPEC_AUTO_SUPPRESS_OPENMP
+SPEC_CXXFLAGS +=
+SPEC_FFLAGS +=
+SPEC_LDFLAGS += -lm
 include $(SPEC_LITE)/Makefile.apps
 .PHONY: clean_preprocess_objs
 clean_preprocess_objs:

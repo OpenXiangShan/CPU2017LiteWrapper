@@ -139,9 +139,9 @@ source/libparest/slave/stationary/slave.cc \
 source/libparest/slave/stationary/state_discretization.cc \
 source/libparest/slave/stationary/synthetic_data.cc \
 )
-CFLAGS += -Isrc/include -Isrc -DSPEC_AUTO_SUPPRESS_OPENMP -DSPEC_PAREST_STD_FLUSH_WORKAROUND -fpermissive -std=c++03
-CXXFLAGS +=
-FFLAGS +=
+SPEC_CFLAGS += -DSPEC -DNDEBUG -Isrc/include -Isrc -DSPEC_AUTO_SUPPRESS_OPENMP -fpermissive -std=c++03 -DSPEC_LP64
+SPEC_CXXFLAGS +=
+SPEC_FFLAGS +=
 LD_CXX = 1
 include $(SPEC_LITE)/Makefile.apps
 .PHONY: clean_preprocess_objs

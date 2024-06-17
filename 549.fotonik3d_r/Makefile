@@ -4,9 +4,9 @@ communicate.F90 huygens.F90 update.F90 material.F90 mur.F90 \
 PlaneSource.F90 PEC.F90 init.F90 leapfrog.F90 timerRoutine.f90 UPML.F90 \
 yeemain.F90 writeout.F90 MPI_dummy.F90 \
 )
-CFLAGS +=
-CXXFLAGS +=
-FFLAGS += -I$(abspath src) -DSPEC_AUTO_SUPPRESS_OPENMP
+SPEC_CFLAGS +=
+SPEC_CXXFLAGS +=
+SPEC_FFLAGS += -I$(abspath src) -DSPEC_AUTO_SUPPRESS_OPENMP
 SPECCPPFLAGS += -DSPEC -DNDEBUG -DSPEC_AUTO_SUPPRESS_OPENMP -DSPEC_LP64
 LD_FORTRAN = 1
 

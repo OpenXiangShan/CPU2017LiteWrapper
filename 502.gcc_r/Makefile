@@ -77,10 +77,10 @@ c-pch.c cpp_files.c cpp_init.c cppdefault.c intl.c prefix.c strerror.c \
 toplev.c vasprintf.c version.c builtins.c real.c mini-gmp.c \
 spec_qsort/spec_qsort.c \
 )
-CFLAGS += -DSPEC -DNDEBUG -Isrc -Isrc/include -Isrc/spec_qsort -DSPEC_502 -DSPEC_AUTO_SUPPRESS_OPENMP -DIN_GCC -DHAVE_CONFIG_H -DSPEC_LP64
-CXXFLAGS +=
-FFLAGS +=
-LDFLAGS += -z muldefs
+SPEC_CFLAGS += -DSPEC -DNDEBUG -Isrc -Isrc/include -Isrc/spec_qsort -DSPEC_502 -DSPEC_AUTO_SUPPRESS_OPENMP -DIN_GCC -DHAVE_CONFIG_H -DSPEC_LP64
+SPEC_CXXFLAGS +=
+SPEC_FFLAGS +=
+SPEC_LDFLAGS += -z muldefs
 include $(SPEC_LITE)/Makefile.apps
 .PHONY: clean_preprocess_objs
 clean_preprocess_objs:

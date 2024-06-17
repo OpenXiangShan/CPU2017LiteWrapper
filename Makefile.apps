@@ -39,11 +39,24 @@ READELF = $(CROSS_COMPILE)readelf
 COPTIMIZE_FLAGS = -O3
 CXXOPTIMIZE_FLAGS = $(COPTIMIZE_FLAGS)
 FPPTIMIZE_FLAGS = -O3
+BASE_CFLAGS   += -DSPEC -DSPEC_LINUX_X64 -DSPEC_LINUX  -static -std=c99 -mabi=lp64d -MMD -fno-strict-aliasing -Wno-implicit-int -Wno-int-conversion -Wno-incompatible-pointer-types -Wno-implicit-function-declaration -g -O3 -march=rv64gc_zba_zbb_zbc_zbs $(SPECIFIC_FLAG) 
+BASE_CXXFLAGS += $(CFLAGS)
+BASE_FFLAGS  += -DSPEC -DNDEBUG -DSPEC_AUTO_SUPPRESS_OPENMP -DSPEC_LP64 -DSPEC_LINUX --static -fallow-argument-mismatch -mabi=lp64d -g -O3 -march=rv64gc_zba_zbb_zbc_zbs $(SPECIFIC_FLAG)
+BASE_LDFLAGS  += --static
 
-CFLAGS   += -static -DSPEC -DSPEC_LINUX_X64 -DSPEC_LINUX -std=c99 -mabi=lp64d -MMD -fno-strict-aliasing -Wno-implicit-int -Wno-int-conversion -Wno-incompatible-pointer-types -Wno-implicit-function-declaration -g -O3 -march=rv64gc_zba_zbb_zbc_zbs $(SPECIFIC_FLAG)
-CXXFLAGS += $(CFLAGS)
-FFLAGS  += -static -fallow-argument-mismatch -mabi=lp64d -g -O3 -march=rv64gc_zba_zbb_zbc_zbs -DSPEC -DNDEBUG -DSPEC_AUTO_SUPPRESS_OPENMP -DSPEC_LP64 -DSPEC_LINUX $(SPECIFIC_FLAG)
-LDFLAGS  += -static
+
+ifeq ($(LD_FORTRAN),1)
+BASE_LDFLAGS += $(BASE_FFLAGS)
+else ifeq ($(LD_CXX),1)
+BASE_LDFLAGS += $(BASE_CXXFLAGS)
+else
+BASE_LDFLAGS += $(BASE_CFLAGS)
+endif
+
+CFLAGS += $(BASE_CFLAGS) $(SPEC_CFLAGS)
+CXXFLAGS += $(BASE_CXXFLAGS) $(SPEC_CXXFLAGS)
+FFLAGS += $(BASE_FFLAGS) $(SPEC_FFLAGS)
+LDFLAGS += $(BASE_LDFLAGS) $(SPEC_LDFLAGS)
 
 JEMALLOC_LIBS :=
 ifeq ($(LD_JEMALLOC),1)
@@ -129,6 +142,10 @@ clean: clean_preprocess_objs
 
 .PHONY: clean-all
 clean-all: clean clean-src
+
+.PHONY: clean-logs
+clean-logs:
+	@rm -rf ./logs
 
 .PHONY: print_vars
 print_vars:

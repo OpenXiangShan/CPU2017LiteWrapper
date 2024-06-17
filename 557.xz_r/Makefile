@@ -42,9 +42,9 @@ SRCS = $(addprefix src/, spec.c spec_xz.c pxz.c common/tuklib_physmem.c \
 	 common/tuklib_mbstr_width.c common/tuklib_mbstr_fw.c \
 	 spec_mem_io/spec_mem_io.c sha-2/sha512.c \
 )
-CFLAGS += -DSPEC -DNDEBUG -DSPEC_AUTO_BYTEORDER=0x12345678 -DHAVE_CONFIG_H=1 -DSPEC_MEM_IO -DSPEC_XZ -DSPEC_AUTO_SUPPRESS_OPENMP -Isrc -Isrc/spec_mem_io -Isrc/sha-2 -Isrc/common -Isrc/liblzma/api -Isrc/liblzma/lzma -Isrc/liblzma/common -Isrc/liblzma/check -Isrc/liblzma/simple -Isrc/liblzma/delta -Isrc/liblzma/lz -Isrc/liblzma/rangecoder 
-CXXFLAGS +=
-FFLAGS +=
+SPEC_CFLAGS += -DSPEC -DNDEBUG -DSPEC_AUTO_BYTEORDER=0x12345678 -DHAVE_CONFIG_H=1 -DSPEC_MEM_IO -DSPEC_XZ -DSPEC_AUTO_SUPPRESS_OPENMP -Isrc -Isrc/spec_mem_io -Isrc/sha-2 -Isrc/common -Isrc/liblzma/api -Isrc/liblzma/lzma -Isrc/liblzma/common -Isrc/liblzma/check -Isrc/liblzma/simple -Isrc/liblzma/delta -Isrc/liblzma/lz -Isrc/liblzma/rangecoder 
+SPEC_CXXFLAGS +=
+SPEC_FFLAGS +=
 LIBS +=
 include $(SPEC_LITE)/Makefile.apps
 .PHONY: clean_preprocess_objs

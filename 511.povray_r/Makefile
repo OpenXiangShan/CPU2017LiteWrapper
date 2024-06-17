@@ -21,9 +21,10 @@ frontend/defaultrenderfrontend.cpp frontend/messageoutput.cpp \
 frontend/processrenderoptions.cpp frontend/renderfrontend.cpp \
 spec_qsort/spec_qsort.c \
 )
-CFLAGS += -Isrc/frontend -Isrc/base -Isrc -Isrc/spec_qsort -DSPEC_AUTO_SUPPRESS_OPENMP
-CXXFLAGS +=
-FFLAGS +=
+
+SPEC_CFLAGS += -DSPEC -DNDEBUG -Isrc/frontend -Isrc/base -Isrc -Isrc/spec_qsort -DSPEC_AUTO_SUPPRESS_OPENMP
+SPEC_CXXFLAGS +=
+SPEC_FFLAGS +=
 LD_CXX = 1
 include $(SPEC_LITE)/Makefile.apps
 .PHONY: clean_preprocess_objs

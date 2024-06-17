@@ -4,9 +4,9 @@ ComputeNonbondedLES.C ComputeNonbondedPProf.C ComputeNonbondedStd.C \
 ComputeNonbondedUtil.C LJTable.C Molecule.C Patch.C PatchList.C \
 ResultSet.C SimParameters.C erf.C spec_namd.C \
 )
-CFLAGS += -DNAMD_DISABLE_SSE -DSPEC_AUTO_SUPPRESS_OPENMP -std=c99
-CXXFLAGS +=
-FFLAGS +=
+SPEC_CFLAGS += -DSPEC -DNDEBUG -DNAMD_DISABLE_SSE -DSPEC_AUTO_SUPPRESS_OPENMP -std=c99 -DSPEC_LP64
+SPEC_CXXFLAGS +=
+SPEC_FFLAGS +=
 LD_CXX = 1
 include $(SPEC_LITE)/Makefile.apps
 .PHONY: clean_preprocess_objs

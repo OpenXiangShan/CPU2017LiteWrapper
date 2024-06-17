@@ -74,9 +74,9 @@ model/EtherMACBase.cc model/EtherAppSrv.cc model/MACRelayUnitPP.cc \
 model/EtherHub.cc model/EtherAppCli.cc \
 )
 
-CFLAGS += -Isrc/simulator/platdep -Isrc/simulator -Isrc/model -DWITH_NETBUILDER -DSPEC_AUTO_SUPPRESS_OPENMP
-CXXFLAGS += -fpermissive -std=c++03 -fno-strict-aliasing
-FFLAGS +=
+SPEC_CFLAGS += -DSPEC -DNDEBUG -Isrc/simulator/platdep -Isrc/simulator -Isrc/model -DWITH_NETBUILDER -DSPEC_AUTO_SUPPRESS_OPENMP -DSPEC_LP64 -fpermissive -std=c++03 -fno-strict-aliasing
+SPEC_CXXFLAGS +=
+SPEC_FFLAGS +=
 LD_CXX = 1
 include $(SPEC_LITE)/Makefile.apps
 .PHONY: clean_preprocess_objs

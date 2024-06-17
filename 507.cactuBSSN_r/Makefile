@@ -242,9 +242,9 @@ TmunuBase/CopyTmunu.f90 TmunuBase/SetStressEnergyState.f90 \
 TmunuBase/SetTmunu.f90 TmunuBase/ZeroTmunu.f90 \
 TmunuBase/cctk_Bindings/cctk_ThornBindings.c datestamp.c \
 )
-CFLAGS += -Isrc/include -DCCODE -DCCODE -DCCTK_DISABLE_RESTRICT=1
-CXXFLAGS +=
-FFLAGS += -I$(abspath src/include) -DCCODE
+SPEC_CFLAGS += -DSPEC -DNDEBUG -DSPEC_AUTO_SUPPRESS_OPENMP -Isrc/include -DCCODE -DCCODE -DCCTK_DISABLE_RESTRICT=1 -DSPEC_LP64
+SPEC_CXXFLAGS +=
+SPEC_FFLAGS += -I$(abspath src/include) -DCCODE
 LD_CXX = 1
 include $(SPEC_LITE)/Makefile.apps
 .PHONY: clean_preprocess_objs

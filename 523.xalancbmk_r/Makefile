@@ -273,10 +273,10 @@ XercesTreeWalker.cpp XercesWrapperHelper.cpp XercesWrapperNavigator.cpp \
 XercesWrapperNavigatorAllocator.cpp XercesWrapperToXalanNodeMap.cpp \
 XercesXPath.cpp YearDatatypeValidator.cpp YearMonthDatatypeValidator.cpp \
 )
-CFLAGS += -DSPEC -DNDEBUG  -DAPP_NO_THREADS -DXALAN_INMEM_MSG_LOADER -Isrc -Isrc/xercesc -Isrc/xercesc/dom -Isrc/xercesc/dom/impl -Isrc/xercesc/sax -Isrc/xercesc/util/MsgLoaders/InMemory -Isrc/xercesc/util/Transcoders/Iconv -Isrc/xalanc/include -DPROJ_XMLPARSER -DPROJ_XMLUTIL -DPROJ_PARSERS -DPROJ_SAX4C -DPROJ_SAX2 -DPROJ_DOM -DPROJ_VALIDATORS -DXML_USE_INMEM_MESSAGELOADER -DSPEC_AUTO_SUPPRESS_OPENMP    -DSPEC_LINUX     -DSPEC_LP64 -DAPP_NO_THREADS -DXALAN_INMEM_MSG_LOADER -Isrc -Isrc/xercesc -Isrc/xercesc/dom -Isrc/xercesc/dom/impl -Isrc/xercesc/sax -Isrc/xercesc/util/MsgLoaders/InMemory -Isrc/xercesc/util/Transcoders/Iconv -Isrc/xalanc/include -DPROJ_XMLPARSER -DPROJ_XMLUTIL -DPROJ_PARSERS -DPROJ_SAX4C -DPROJ_SAX2 -DPROJ_DOM -DPROJ_VALIDATORS -DXML_USE_INMEM_MESSAGELOADER -DSPEC_AUTO_SUPPRESS_OPENMP
-CXXFLAGS +=
-FFLAGS +=
-LDFLAGS += -static -fpermissive -std=c++03 -mabi=lp64d  -MMD -fno-strict-aliasing -Wno-implicit-int -Wno-int-conversion -Wno-incompatible-pointer-types -Wno-implicit-function-declaration -g -O3 -march=rv64gc -DSPEC_LINUX
+SPEC_CFLAGS += -DSPEC -DNDEBUG -DAPP_NO_THREADS -DXALAN_INMEM_MSG_LOADER -Isrc -Isrc/xercesc -Isrc/xercesc/dom -Isrc/xercesc/dom/impl -Isrc/xercesc/sax -Isrc/xercesc/util/MsgLoaders/InMemory -Isrc/xercesc/util/Transcoders/Iconv -Isrc/xalanc/include -DPROJ_XMLPARSER -DPROJ_XMLUTIL -DPROJ_PARSERS -DPROJ_SAX4C -DPROJ_SAX2 -DPROJ_DOM -DPROJ_VALIDATORS -DXML_USE_INMEM_MESSAGELOADER -DSPEC_AUTO_SUPPRESS_OPENMP    -DSPEC_LINUX     -DSPEC_LP64 -DAPP_NO_THREADS -DXALAN_INMEM_MSG_LOADER -Isrc -Isrc/xercesc -Isrc/xercesc/dom -Isrc/xercesc/dom/impl -Isrc/xercesc/sax -Isrc/xercesc/util/MsgLoaders/InMemory -Isrc/xercesc/util/Transcoders/Iconv -Isrc/xalanc/include -DPROJ_XMLPARSER -DPROJ_XMLUTIL -DPROJ_PARSERS -DPROJ_SAX4C -DPROJ_SAX2 -DPROJ_DOM -DPROJ_VALIDATORS -DXML_USE_INMEM_MESSAGELOADER -DSPEC_AUTO_SUPPRESS_OPENMP
+SPEC_CXXFLAGS +=
+SPEC_FFLAGS +=
+SPEC_LDFLAGS += -fpermissive -std=c++03 -DSPEC_LINUX
 LD_CXX = 1
 include $(SPEC_LITE)/Makefile.apps
 .PHONY: clean_preprocess_objs

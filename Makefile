@@ -32,7 +32,7 @@ build_fp_%:
 
 build_int_%:
 	@$(call create_log_dir)
-	@$(MAKE) -s -C $* SPECIFIC_FLAG=-ffp-contract=off >> $*/logs/build_fp_$*_$(TIMESTAMP).log 2>&1
+	@$(MAKE) -s -C $* SPECIFIC_FLAG=-ffp-contract=off  >> $*/logs/build_fp_$*_$(TIMESTAMP).log 2>&1
 	@echo "Building INT target: $*"
 
 clean_fp_%:
@@ -50,6 +50,14 @@ clean_src_fp_%:
 clean_src_int_%:
 	@$(MAKE) -s -C $* clean-src
 	@echo "Cleaning source files for INT target: $*"
+
+clean_logs_fp_%:
+	@$(MAKE) -s -C $* clean-logs
+	@echo "Cleaning log files for FP target: $*"
+
+clean_logs_int_%:
+	@$(MAKE) -s -C $* clean-logs
+	@echo "Cleaning log files for INT target: $*"
 
 # Define the build and clean targets
 build_fps: $(addprefix build_fp_, $(SPECFPSPEED))
@@ -73,3 +81,8 @@ clean_src_allr: clean_src_fpr clean_src_intr
 copy_fpr: $(addprefix copy_fp_, $(SPECFPRATE))
 copy_intr: $(addprefix copy_int_, $(SPECINTRATE))
 copy_allr: copy_fpr copy_intr
+
+clean_logs_fpr: $(addprefix clean_logs_fp_, $(SPECFPRATE))
+clean_logs_intr: $(addprefix clean_logs_int_, $(SPECINTRATE))
+clean_logs_allr: clean_logs_fpr clean_logs_intr
+

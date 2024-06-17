@@ -16,10 +16,10 @@ x264_src/output/matroska_ebml.c x264_src/output/flv.c \
 x264_src/output/flv_bytestream.c x264_src/input/thread.c x264_src/x264.c \
 x264_src/extras/getopt.c \
 )
-CFLAGS += -Isrc/ldecod_src/inc -Isrc/x264_src -Isrc/x264_src/extras -Isrc/x264_src/common -DSPEC_AUTO_SUPPRESS_OPENMP -DSPEC_AUTO_BYTEORDER=0x12345678
-CXXFLAGS +=
-FFLAGS +=
-LDFLAGS += -lm
+SPEC_CFLAGS += -Isrc/ldecod_src/inc -Isrc/x264_src -Isrc/x264_src/extras -Isrc/x264_src/common -DSPEC_AUTO_SUPPRESS_OPENMP -DSPEC_AUTO_BYTEORDER=0x12345678
+SPEC_CXXFLAGS +=
+SPEC_FFLAGS +=
+SPEC_LDFLAGS += -lm
 include $(SPEC_LITE)/Makefile.apps
 .PHONY: clean_preprocess_objs
 clean_preprocess_objs:

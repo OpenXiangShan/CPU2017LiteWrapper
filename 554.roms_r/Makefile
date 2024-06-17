@@ -50,9 +50,9 @@ wrt_gst.F90 wrt_hessian.F90 wrt_his.F90 wrt_impulse.F90 wrt_info.F90 \
 wrt_ini.F90 wrt_rst.F90 wrt_station.F90 wrt_tides.F90 mod_arrays.F90 \
 mod_nesting.F90 esmf_roms.F90 master.F90 \
 )
-CFLAGS +=
-CXXFLAGS +=
-FFLAGS += -fallow-argument-mismatch -mabi=lp64d -I$(abspath ./src)
+SPEC_CFLAGS +=
+SPEC_CXXFLAGS +=
+SPEC_FFLAGS += -fallow-argument-mismatch -mabi=lp64d -I$(abspath ./src)
 SPECCPPFLAGS += -DSPEC -DNDEBUG -w -m literal-single.pm -m c-comment.pm -I$(abspath src) -DBENCHMARK -DNestedGrids=1 -DNO_GETTIMEOFDAY -DSPEC_AUTO_SUPPRESS_OPENMP -DSPEC_LP64
 
 LD_FORTRAN = 1
