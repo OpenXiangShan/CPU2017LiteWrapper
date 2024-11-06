@@ -39,11 +39,10 @@ READELF = $(CROSS_COMPILE)readelf
 COPTIMIZE_FLAGS = -O3
 CXXOPTIMIZE_FLAGS = $(COPTIMIZE_FLAGS)
 FPPTIMIZE_FLAGS = -O3
-BASE_CFLAGS   += -DSPEC -DSPEC_LINUX_X64 -DSPEC_LINUX  -static -std=c99 -mabi=lp64d -MMD -fno-strict-aliasing -Wno-implicit-int -Wno-int-conversion -Wno-incompatible-pointer-types -Wno-implicit-function-declaration -g -O3 -march=rv64gc_zba_zbb_zbc_zbs $(SPECIFIC_FLAG) 
+BASE_CFLAGS   += -DSPEC -DSPEC_LINUX_X64 -DSPEC_LINUX -std=c99 -mabi=lp64d -MMD -fno-strict-aliasing -Wno-implicit-int -Wno-int-conversion -Wno-incompatible-pointer-types -Wno-implicit-function-declaration -g -O3 -march=rv64gc_zba_zbb_zbc_zbs $(SPECIFIC_FLAG) 
 BASE_CXXFLAGS += $(CFLAGS)
-BASE_FFLAGS  += -DSPEC -DNDEBUG -DSPEC_AUTO_SUPPRESS_OPENMP -DSPEC_LP64 -DSPEC_LINUX --static -fallow-argument-mismatch -mabi=lp64d -g -O3 -march=rv64gc_zba_zbb_zbc_zbs $(SPECIFIC_FLAG)
-BASE_LDFLAGS  += --static
-
+BASE_FFLAGS  += -fallow-argument-mismatch -mabi=lp64d -g -O3 -DSPEC -DNDEBUG -DSPEC_AUTO_SUPPRESS_OPENMP -DSPEC_LP64 -DSPEC_LINUX -march=rv64gc_zba_zbb_zbc_zbs $(SPECIFIC_FLAG)
+BASE_LDFLAGS  +=
 
 ifeq ($(LD_FORTRAN),1)
 BASE_LDFLAGS += $(BASE_FFLAGS)
@@ -60,7 +59,7 @@ LDFLAGS += $(BASE_LDFLAGS) $(SPEC_LDFLAGS)
 
 JEMALLOC_LIBS :=
 ifeq ($(LD_JEMALLOC),1)
-JEMALLOC_LIBS += $(RISCV)/lib/libjemalloc.a -lm -pthread
+JEMALLOC_LIBS += -L$(RISCV)/lib -ljemalloc -lm -pthread
 endif
 
 $(DST_DIR)/%.o: %.c
