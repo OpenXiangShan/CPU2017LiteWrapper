@@ -7,11 +7,6 @@
 export SPEC=/spec2017_path
 
 ```
-- set SPEC_LITE env var to the path of this repo
-
-``` shell
-export SPEC_LITE=/CPU2017LiteWrapper
-```
 
 - source shrc
 

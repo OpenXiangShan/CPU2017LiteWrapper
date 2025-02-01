@@ -10,9 +10,8 @@ ifeq ($(SPEC),)
 $(error ERROR: enviroment variable SPEC is not defined)
 endif
 
-ifeq ($(SPEC_LITE),)
-$(error ERROR: enviroment variable SPEC_LITE is not defined)
-endif
+SPEC_LITE ?= $(CURDIR)
+export SPEC_LITE
 
 create_log_dir = @mkdir -p $*/logs
 TIMESTAMP := $(shell date +%Y%m%d_%H%M%S)
