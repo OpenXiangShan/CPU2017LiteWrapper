@@ -24,6 +24,14 @@ copy_int_%:
 	@$(MAKE) -s -C $* copy-src
 	@echo "Copying source files for INT target: $*"
 
+copy_data_fp_%:
+	@$(MAKE) -s -C $* copy-data
+	@echo "Copying data files for FP target: $*"
+
+copy_data_int_%:
+	@$(MAKE) -s -C $* copy-data
+	@echo "Copying data files for INT target: $*"
+
 build_fp_%:
 	@$(call create_log_dir)
 	@$(MAKE) -s -C $* >> $*/logs/build_fp_$*_$(TIMESTAMP).log 2>&1
@@ -80,6 +88,10 @@ clean_src_allr: clean_src_fpr clean_src_intr
 copy_fpr: $(addprefix copy_fp_, $(SPECFPRATE))
 copy_intr: $(addprefix copy_int_, $(SPECINTRATE))
 copy_allr: copy_fpr copy_intr
+
+copy_data_fp: $(addprefix copy_data_fp_, $(SPECFPRATE))
+copy_data_int: $(addprefix copy_data_int_, $(SPECINTRATE))
+copy_data_all: copy_data_fp copy_data_int
 
 clean_logs_fpr: $(addprefix clean_logs_fp_, $(SPECFPRATE))
 clean_logs_intr: $(addprefix clean_logs_int_, $(SPECINTRATE))

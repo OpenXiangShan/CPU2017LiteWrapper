@@ -135,6 +135,11 @@ copy-src:
 	@cp -r $(SPEC)/benchspec/CPU/$(NAME)/src ./
 	@chmod -R +w src
 
+.PHONY: copy-data
+copy-data:
+	@cp -r $(SPEC)/benchspec/CPU/$(NAME)/data ./
+	@chmod -R +w data
+
 .PHONY: clean
 clean: clean_preprocess_objs
 	@rm -rf ./build
