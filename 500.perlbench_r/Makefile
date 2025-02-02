@@ -24,3 +24,16 @@ SPEC_LDFLAGS += -z muldefs -lm
 include $(SPEC_LITE)/Makefile.apps
 .PHONY: clean_preprocess_objs
 clean_preprocess_objs:
+
+refrate-cmp:
+	@for f in checkspam.2500.5.25.11.150.1.1.1.1.out splitmail.6400.12.26.16.100.0.out diffmail.4.800.10.17.19.300.out; do \
+		$(DIFF) run/$$f data/refrate/output/$$f; \
+	done
+train-cmp:
+	@for f in splitmail.535.13.25.24.1091.1.out validate diffmail.2.550.15.24.23.100.out suns.out scrabbl.out perfect.b.3.out; do \
+		$(DIFF) run/$$f data/train/output/$$f; \
+	done
+test-cmp:
+	@for f in makerand.out test.out; do \
+		$(DIFF) run/$$f data/test/output/$$f; \
+	done

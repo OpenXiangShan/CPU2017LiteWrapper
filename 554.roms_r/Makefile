@@ -180,3 +180,16 @@ $(DST_DIR)/src/$(addsuffix $(OBJ_SUFFIX), wvelocity.fppized): src/wvelocity.fppi
 $(DST_DIR)/src/$(addsuffix $(OBJ_SUFFIX), zetabc.fppized): src/zetabc.fppized.f90 $(addprefix $(DST_DIR)/src/,$(addsuffix $(OBJ_SUFFIX),$(basename ) mod_boundary.fppized mod_grid.fppized mod_ocean.fppized mod_param.fppized mod_scalars.fppized mod_stepping.fppized))
 
 
+
+refrate-cmp:
+	@for f in ocean_benchmark2.log; do \
+		$(DIFF) run/$$f data/refrate/output/$$f; \
+	done
+train-cmp:
+	@for f in ocean_benchmark1.log; do \
+		$(DIFF) run/$$f data/train/output/$$f; \
+	done
+test-cmp:
+	@for f in ocean_benchmark0.log; do \
+		$(DIFF) run/$$f data/test/output/$$f; \
+	done

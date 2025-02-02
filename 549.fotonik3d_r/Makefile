@@ -34,3 +34,16 @@ $(DST_DIR)/$(addsuffix $(OBJ_SUFFIX), src/yeemain.fppized): src/yeemain.fppized.
 clean_preprocess_objs:
 	@rm -rf $(PREPROCESS_OBJS)
 	@find src -name "*.mod" -exec rm {} \;
+
+refrate-cmp:
+	@for f in pscyee.out; do \
+		$(DIFF) run/$$f data/refrate/output/$$f; \
+	done
+train-cmp:
+	@for f in pscyee.out; do \
+		$(DIFF) run/$$f data/train/output/$$f; \
+	done
+test-cmp:
+	@for f in pscyee.out; do \
+		$(DIFF) run/$$f data/test/output/$$f; \
+	done

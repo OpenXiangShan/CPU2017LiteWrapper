@@ -49,3 +49,16 @@ LIBS +=
 include $(SPEC_LITE)/Makefile.apps
 .PHONY: clean_preprocess_objs
 clean_preprocess_objs:
+
+refrate-cmp:
+	@for f in cld.tar-160-6.out cpu2006docs.tar-250-6e.out input.combined-250-7.out; do \
+		$(DIFF) run/$$f data/refrate/output/$$f; \
+	done
+train-cmp:
+	@for f in input.combined-40-8.out IMG_2560.cr2-40-4.out; do \
+		$(DIFF) run/$$f data/train/output/$$f; \
+	done
+test-cmp:
+	@for f in cpu2006docs.tar-1-1.out cpu2006docs.tar-1-2.out cpu2006docs.tar-1-4e.out cpu2006docs.tar-1-3e.out cpu2006docs.tar-4-4.out cpu2006docs.tar-4-1.out cpu2006docs.tar-1-4.out cpu2006docs.tar-4-3e.out cpu2006docs.tar-4-2.out cpu2006docs.tar-4-0.out cpu2006docs.tar-1-0.out cpu2006docs.tar-4-4e.out; do \
+		$(DIFF) run/$$f data/test/output/$$f; \
+	done

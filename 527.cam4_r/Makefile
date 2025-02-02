@@ -541,3 +541,16 @@ $(DST_DIR)/src/$(addsuffix $(OBJ_SUFFIX), xpavg_mod.fppized): src/xpavg_mod.fppi
 $(DST_DIR)/src/$(addsuffix $(OBJ_SUFFIX), zenith.fppized): src/zenith.fppized.f90 $(addprefix $(DST_DIR)/src/,$(addsuffix $(OBJ_SUFFIX),$(basename ) cam_control_mod.fppized shr_kind_mod.fppized shr_orb_mod.fppized))
 $(DST_DIR)/src/$(addsuffix $(OBJ_SUFFIX), zm_conv.fppized): src/zm_conv.fppized.f90 $(addprefix $(DST_DIR)/src/,$(addsuffix $(OBJ_SUFFIX),$(basename ) abortutils.fppized cam_logfile.fppized cldwat.fppized constituents.fppized dycore.fppized mpishorthand.fppized namelist_utils.fppized phys_control.fppized phys_grid.fppized physconst.fppized ppgrid.fppized shr_kind_mod.fppized spmd_utils.fppized units.fppized wv_saturation.fppized))
 $(DST_DIR)/src/$(addsuffix $(OBJ_SUFFIX), zm_conv_intr.fppized): src/zm_conv_intr.fppized.f90 $(addprefix $(DST_DIR)/src/,$(addsuffix $(OBJ_SUFFIX),$(basename ) cam_history.fppized cam_logfile.fppized check_energy.fppized constituents.fppized error_messages.fppized perf_mod.fppized phys_buffer.fppized phys_control.fppized phys_grid.fppized physconst.fppized physics_types.fppized pmgrid.fppized ppgrid.fppized shr_kind_mod.fppized spmd_utils.fppized time_manager.fppized zm_conv.fppized))
+
+refrate-cmp:
+	@for f in cam4_validate.txt; do \
+		$(DIFF) run/$$f data/refrate/output/$$f; \
+	done
+train-cmp:
+	@for f in cam4_validate.txt; do \
+		$(DIFF) run/$$f data/train/output/$$f; \
+	done
+test-cmp:
+	@for f in cam4_validate.txt; do \
+		$(DIFF) run/$$f data/test/output/$$f; \
+	done

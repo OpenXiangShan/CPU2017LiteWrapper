@@ -283,3 +283,16 @@ include $(SPEC_LITE)/Makefile.apps
 clean_preprocess_objs:
 
 
+
+refrate-cmp:
+	@for f in ref-t5.out; do \
+		$(DIFF) run/$$f data/refrate/output/$$f; \
+	done
+train-cmp:
+	@for f in train-allbooks.out; do \
+		$(DIFF) run/$$f data/train/output/$$f; \
+	done
+test-cmp:
+	@for f in test-test.out; do \
+		$(DIFF) run/$$f data/test/output/$$f; \
+	done

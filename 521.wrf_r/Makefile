@@ -411,3 +411,16 @@ $(DST_DIR)/src/$(addsuffix $(OBJ_SUFFIX), wrf_timeseries.fppized): src/wrf_times
 $(DST_DIR)/src/$(addsuffix $(OBJ_SUFFIX), wrf_tsin.fppized): src/wrf_tsin.fppized.f90 $(addprefix $(DST_DIR)/src/,$(addsuffix $(OBJ_SUFFIX),$(basename ) module_domain.fppized module_utility.fppized))
 
 
+
+refrate-cmp:
+	@for f in diffwrf_output_01.txt; do \
+		$(DIFF) run/$$f data/refrate/output/$$f; \
+	done
+train-cmp:
+	@for f in diffwrf_output_01.txt; do \
+		$(DIFF) run/$$f data/train/output/$$f; \
+	done
+test-cmp:
+	@for f in diffwrf_output_01.txt; do \
+		$(DIFF) run/$$f data/test/output/$$f; \
+	done

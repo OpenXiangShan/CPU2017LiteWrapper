@@ -4,4 +4,5 @@
 **/*_s
 scripts/*
 !scripts/collect.sh
+!scripts/gen_diff.py
 **/logs
