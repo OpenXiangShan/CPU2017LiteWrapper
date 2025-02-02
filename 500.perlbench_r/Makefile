@@ -20,7 +20,7 @@ SRCS = $(addprefix src/, av.c caretx.c deb.c doio.c doop.c dump.c globals.c gv.c
 SPEC_CFLAGS += -DSPEC -DNDEBUG -DPERL_CORE -Isrc/ -Isrc/dist/IO -Isrc/cpan/Time-HiRes -Isrc/cpan/HTML-Parser -Isrc/ext/re -Isrc/specrand -DDOUBLE_SLASHES_SPECIAL=0 -DSPEC_AUTO_SUPPRESS_OPENMP -D_LARGE_FILES -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -DSPEC_LINUX_X64 -D_DEFAULT_SOURCE -DSPEC_LP64
 SPEC_CXXFLAGS +=
 SPEC_FFLAGS +=
-SPEC_LDFLAGS += -z muldefs -DSPEC_LINUX_X64 -D_DEFAULT_SOURCE -lm
+SPEC_LDFLAGS += -z muldefs -lm
 include $(SPEC_LITE)/Makefile.apps
 .PHONY: clean_preprocess_objs
 clean_preprocess_objs:
