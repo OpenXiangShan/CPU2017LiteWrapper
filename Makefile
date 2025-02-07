@@ -97,3 +97,39 @@ clean_logs_fpr: $(addprefix clean_logs_fp_, $(SPECFPRATE))
 clean_logs_intr: $(addprefix clean_logs_int_, $(SPECINTRATE))
 clean_logs_allr: clean_logs_fpr clean_logs_intr
 
+# prototype: cmd_template(size)
+define cmd_template
+run-int-$(1): $(foreach t,$(SPECINTRATE),run-$t-$(1))
+	echo "\n\n\n"
+	$(MAKE) report-int-$(1)
+
+validate-int-$(1):
+	for t in $$(SPECINTRATE); do $(MAKE) -s -C $$$$t $(1)-cmp; done
+
+run-fp-$(1): $(foreach t,$(SPECFPRATE),run-$t-$(1))
+	echo "\n\n\n"
+	$(MAKE) report-fp-$(1)
+
+run-all-$(1): $(foreach t,$(SPECINTRATE) $(SPECFPRATE),run-$t-$(1))
+	echo "\n\n\n"
+	$(MAKE) report-int-$(1)
+	$(MAKE) report-fp-$(1)
+
+validate-fp-$(1):
+	for t in $$(SPECFPRATE); do $(MAKE) -s -C $$$$t $(1)-cmp; done
+
+run-%-$(1):
+	echo "Running $(1) on $$*"
+	@$(MAKE) -s -C $$* run-$(1) > $$*/build/run-$(1).log
+
+report-int-$(1):
+	for t in $$(SPECINTRATE); do cat $$$$t/run/run-$(1).sh.timelog; echo ""; done
+	for t in $$(SPECINTRATE); do cat $$$$t/run/run-$(1).sh.timelog | grep "# elapsed in second" | sed -e "s/#.*/\t$$$$t/"; done
+
+report-fp-$(1):
+	for t in $$(SPECFPRATE); do cat $$$$t/run/run-$(1).sh.timelog; echo ""; done
+	for t in $$(SPECFPRATE); do cat $$$$t/run/run-$(1).sh.timelog | grep "# elapsed in second" | sed -e "s/#.*/\t$$$$t/"; done
+
+endef
+
+$(eval $(foreach size,test train refrate,$(call cmd_template,$(size))))
