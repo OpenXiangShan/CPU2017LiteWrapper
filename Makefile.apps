@@ -63,52 +63,52 @@ ifeq ($(LD_JEMALLOC),1)
 JEMALLOC_LIBS += -L$(RISCV)/lib -ljemalloc -lm -pthread
 endif
 
-$(DST_DIR)/%.o: %.c
+$(DST_DIR)/src/%.o: src/%.c
 	@mkdir -p $(dir $@) && echo + CC $<
 	@$(CC) $(CFLAGS) -c -o $(abspath $@) $(abspath $<)
 
 ### Rule (compile): a single `.C` -> `.o` (g++)
-$(DST_DIR)/%.o: %.C
+$(DST_DIR)/src/%.o: src/%.C
 	@mkdir -p $(dir $@) && echo + CXX $<
 	@$(CXX) $(CXXFLAGS) -c -o $(abspath $@) $(abspath $<)
 
 ### Rule (compile): a single `.cc` -> `.o` (g++)
-$(DST_DIR)/%.o: %.cc
+$(DST_DIR)/src/%.o: src/%.cc
 	@mkdir -p $(dir $@) && echo + CXX $<
 	@$(CXX) $(CXXFLAGS) -c -o $(abspath $@) $(abspath $<)
 
 ### Rule (compile): a single `.cpp` -> `.o` (g++)
-$(DST_DIR)/%.o: %.cpp
+$(DST_DIR)/src/%.o: src/%.cpp
 	@mkdir -p $(dir $@) && echo + CXX $<
 	@$(CXX) $(CXXFLAGS) -c -o $(abspath $@) $(abspath $<)
 
 ### Rule (compile): a single `.f` -> `.o` (gfortran)
-$(DST_DIR)/%.o: %.f
+$(DST_DIR)/src/%.o: src/%.f
 	@mkdir -p $(dir $@) && echo + FC $<
 	@cd $(dir $<) && $(FC) $(FFLAGS) -c -o $(abspath $@) $(abspath $<)
 
 ### Rule (compile): a single `.fppized.f90` -> `.fppized.o` (gfortran)
-$(DST_DIR)/%.fppized.o: %.fppized.f90
+$(DST_DIR)/src/%.fppized.o: src/%.fppized.f90
 	@mkdir -p $(dir $@) && echo + FC $<
 	@cd $(dir $<) && $(FC) $(FFLAGS) -c -o $(abspath $@) $(abspath $<)
 
 ### Rule (compile): a single `.fppized.f` -> `.fppized.o` (gfortran)
-$(DST_DIR)/%.fppized.o: %.fppized.f
+$(DST_DIR)/src/%.fppized.o: src/%.fppized.f
 	@mkdir -p $(dir $@) && echo + FC $<
 	@cd $(dir $<) && $(FC) $(FFLAGS) -c -o $(abspath $@) $(abspath $<)
 
 ### Rule (compile): a single `.f90` -> `.o` (gfortran)
-$(DST_DIR)/%.o: %.f90
+$(DST_DIR)/src/%.o: src/%.f90
 	@mkdir -p $(dir $@) && echo + FC $<
 	@cd $(dir $<) && $(FC) $(FFLAGS) -c -o $(abspath $@) $(abspath $<)
 
 ### Rule (compile): a single `.F90` -> `.fppized.o` (gfortran)
-%.fppized.f90: %.F90
+src/%.fppized.f90: src/%.F90
 	@echo + PREPARE $<
 	@cd $(dir $<) && ${SPEC}/bin/specperl ${SPEC}/bin/specpp $(SPECCPPFLAGS) -o $(abspath $@) $(abspath $<)
 
 ### Rule (compile): a single `.F` -> `.fppized.o` (gfortran)
-%.fppized.f: %.F
+src/%.fppized.f: src/%.F
 	@echo + PREPARE $<
 	@cd $(dir $<) && ${SPEC}/bin/specperl ${SPEC}/bin/specpp $(SPECCPPFLAGS) -o $(abspath $@) $(abspath $<)
 	
