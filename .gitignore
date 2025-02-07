@@ -1,6 +1,7 @@
 **/src
 **/build*
 **/data
+**/host
 **/run*/
 **/*_s
 scripts/*
