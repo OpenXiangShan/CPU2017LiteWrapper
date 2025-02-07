@@ -127,9 +127,25 @@ $(APP): $(PREPROCESS_OBJS) $(OBJS)
 	@echo + LD "->" $(APP_REL)
 	@$(LD) -o $(abspath $@) $(OBJS) $(LDFLAGS) $(JEMALLOC_LIBS)
 
-.PHONY: clean-src
-clean-src:
-	@rm -rf ./src
+## 5. Running Rules
+
+DIFF = diff
+SPECDIFF_FILE =  $(SPEC)/bin/specdiff
+SPECDIFF = cd $(dir $(SPECDIFF_FILE)) && ./specdiff -m -l 10 $(1) $(abspath $(2)) $(abspath $(3))
+
+# prototype: cmd_template(size)
+define cmd_template
+run-$(1): $$(APP)$$(TAG)
+	@sh $(SPEC_LITE)/scripts/run-template.sh run-$(1).sh $(LOADER)
+	@echo ============ Checking $(notdir $$<) ============
+	@$(MAKE) -s $(1)-cmp
+	@echo ""
+
+endef
+
+$(eval $(foreach size,test train refrate,$(call cmd_template,$(size))))
+
+## 6. Miscellaneous
 
 .PHONY: copy-src
 copy-src:
@@ -144,6 +160,10 @@ copy-data:
 .PHONY: clean
 clean: clean_preprocess_objs
 	@rm -rf ./build
+
+.PHONY: clean-src
+clean-src:
+	@rm -rf ./src
 
 .PHONY: clean-all
 clean-all: clean clean-src
