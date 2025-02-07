@@ -145,6 +145,86 @@ z1fm1b.F90 z1fm1f.F90 zmf2kb.F90 zmf2kf.F90 zmf3kb.F90 zmf3kf.F90 \
 zmf4kb.F90 zmf4kf.F90 zmf5kb.F90 zmf5kf.F90 zmfgkb.F90 zmfgkf.F90 \
 )
 
+VALIDATOR_REL = $(HOST_DIR)/diffwrf_521
+VALIDATOR = $(abspath $(VALIDATOR_REL))
+
+# Spec 17 has at most 1 validator
+VALIDATOR_SRCS = $(addprefix src/, \
+ESMF_Alarm.F90 ESMF_AlarmClock.F90 ESMF_Base.F90 ESMF_BaseTime.F90 \
+ESMF_Calendar.F90 ESMF_Clock.F90 ESMF_Mod.F90 ESMF_Stubs.F90 \
+ESMF_Time.F90 ESMF_TimeInterval.F90 Meat.F90 adapt_timestep_em.F90 \
+c1f2kb.F90 c1f3kb.F90 c1f4kb.F90 c1f5kb.F90 c1fgkb.F90 c1fm1b.F90 \
+c_code.c cfft1b.F90 cfft1i.F90 collect_on_comm.c couple_or_uncouple_em.F90 \
+data.c diffwrf.F90 field_routines.F90 hires_timer.c input_wrf.F90 \
+interp_fcn.F90 io_int.F90 libmassv.F90 mediation_wrfmain.F90 misc.c \
+module_alloc_space_0.F90 module_alloc_space_1.F90 module_alloc_space_2.F90 \
+module_alloc_space_3.F90 module_alloc_space_4.F90 module_alloc_space_5.F90 \
+module_alloc_space_6.F90 module_alloc_space_7.F90 module_alloc_space_8.F90 \
+module_alloc_space_9.F90 module_avgflx_em.F90 module_bc.F90 module_bc_em.F90 \
+module_bc_time_utilities.F90 module_bl_acm.F90 module_bl_boulac.F90 \
+module_bl_camuwpbl_driver.F90 module_bl_gbmpbl.F90 module_bl_gfs.F90 \
+module_bl_gfs2011.F90 module_bl_mfshconvpbl.F90 module_bl_mrf.F90 \
+module_bl_myjpbl.F90 module_bl_myjurb.F90 module_bl_mynn.F90 \
+module_bl_qnsepbl.F90 module_bl_qnsepbl09.F90 module_bl_temf.F90 \
+module_bl_ysu.F90 module_cam_bl_diffusion_solver.F90 module_cam_bl_eddy_diff.F90 \
+module_cam_cldwat.F90 module_cam_constituents.F90 module_cam_error_function.F90 \
+module_cam_esinti.F90 module_cam_gffgch.F90 module_cam_molec_diff.F90 \
+module_cam_mp_cldwat2m_micro.F90 module_cam_mp_conv_water.F90 \
+module_cam_mp_microp_aero.F90 module_cam_mp_modal_aero_initialize_data_phys.F90 \
+module_cam_mp_ndrop.F90 module_cam_mp_qneg3.F90 module_cam_mp_radconstants.F90 \
+module_cam_physconst.F90 module_cam_support.F90 module_cam_trb_mtn_stress.F90 \
+module_cam_upper_bc.F90 module_cam_wv_saturation.F90 module_comm_dm.F90 \
+module_comm_dm_0.F90 module_comm_dm_1.F90 module_comm_dm_2.F90 \
+module_comm_dm_3.F90 module_comm_dm_4.F90 module_comm_nesting_dm.F90 \
+module_configure.F90 module_cpl.F90 module_cpl_oasis3.F90 module_cu_bmj.F90 \
+module_cu_camzm.F90 module_cu_camzm_driver.F90 module_cu_g3.F90 \
+module_cu_gd.F90 module_cu_kf.F90 module_cu_kfeta.F90 module_cu_mesosas.F90 \
+module_cu_nsas.F90 module_cu_osas.F90 module_cu_sas.F90 module_cu_tiedtke.F90 \
+module_data_cam_mam_aero.F90 module_date_time.F90 module_diag_pld.F90 \
+module_dm.F90 module_domain.F90 module_domain_type.F90 module_driver_constants.F90 \
+module_fdda_psufddagd.F90 module_fdda_spnudging.F90 module_fddaobs_rtfdda.F90 \
+module_fr_fire_atm.F90 module_fr_fire_core.F90 module_fr_fire_driver.F90 \
+module_fr_fire_driver_wrf.F90 module_fr_fire_model.F90 module_fr_fire_phys.F90 \
+module_fr_fire_util.F90 module_gfs_funcphys.F90 module_internal_header_util.F90 \
+module_io.F90 module_io_domain.F90 module_io_quilt.F90 module_io_wrf.F90 \
+module_lightning_driver.F90 module_llxy.F90 module_ltng_cpmpr92z.F90 \
+module_ltng_crmpr92.F90 module_ltng_iccg.F90 module_ltng_lpi.F90 \
+module_machine.F90 module_model_constants.F90 module_mp_cammgmp_driver.F90 \
+module_mp_etanew.F90 module_mp_etaold.F90 module_mp_fast_sbm.F90 \
+module_mp_full_sbm.F90 module_mp_milbrandt2mom.F90 module_mp_morr_two_moment.F90 \
+module_mp_nssl_2mom.F90 module_mp_radar.F90 module_mp_thompson.F90 \
+module_mp_wdm5.F90 module_mp_wdm6.F90 module_mp_wsm3.F90 module_mp_wsm5.F90 \
+module_mp_wsm6.F90 module_physics_init.F90 module_ra_cam.F90 module_ra_cam_support.F90 \
+module_ra_clWRF_support.F90 module_ra_gfdleta.F90 module_ra_gsfcsw.F90 \
+module_ra_hs.F90 module_ra_rrtm.F90 module_ra_sw.F90 module_sf_bem.F90 \
+module_sf_bep.F90 module_sf_bep_bem.F90 module_sf_lake.F90 module_sf_myjsfc.F90 \
+module_sf_mynn.F90 module_sf_noah_seaice.F90 module_sf_noahdrv.F90 \
+module_sf_noahlsm.F90 module_sf_noahlsm_glacial_only.F90 module_sf_noahmp_glacier.F90 \
+module_sf_noahmp_groundwater.F90 module_sf_noahmpdrv.F90 module_sf_noahmplsm.F90 \
+module_sf_oml.F90 module_sf_pxlsm.F90 module_sf_pxlsm_data.F90 \
+module_sf_pxsfclay.F90 module_sf_qnsesfc.F90 module_sf_ruclsm.F90 \
+module_sf_sfclay.F90 module_sf_sfclayrev.F90 module_sf_slab.F90 \
+module_sf_temfsfclay.F90 module_sf_urban.F90 module_shcu_camuwshcu.F90 \
+module_shcu_grims.F90 module_state_description.F90 module_stoch.F90 \
+module_streams.F90 module_symbols_util.F90 module_tiles.F90 module_timing.F90 \
+module_utility.F90 module_wind_fitch.F90 module_wrf_error.F90 mradb2.F90 \
+mradb3.F90 mradb4.F90 mradb5.F90 mradbg.F90 mradf2.F90 mradf3.F90 mradf4.F90 \
+mradf5.F90 mradfg.F90 mrftb1.F90 mrftf1.F90 mrfti1.F90 my_strtok.c netcdf/attr.c \
+netcdf/dim.c netcdf/error.c netcdf/fort-attio.c netcdf/fort-control.c \
+netcdf/fort-dim.c netcdf/fort-genatt.c netcdf/fort-geninq.c netcdf/fort-genvar.c \
+netcdf/fort-lib.c netcdf/fort-misc.c netcdf/fort-varaio.c netcdf/libvers.c \
+netcdf/nc.c netcdf/ncio.c netcdf/ncx.c netcdf/putget.c netcdf/string.c \
+netcdf/v1hpg.c netcdf/v2i.c netcdf/var.c nl_get_0_routines.F90 nl_get_1_routines.F90 \
+nl_get_2_routines.F90 nl_get_3_routines.F90 nl_get_4_routines.F90 nl_get_5_routines.F90 \
+nl_get_6_routines.F90 nl_get_7_routines.F90 nl_set_0_routines.F90 nl_set_1_routines.F90 \
+nl_set_2_routines.F90 nl_set_7_routines.F90 output_wrf.F90 pack_utils.c period.c \
+r4_factor.F90 r4_mcfti1.F90 r4_tables.F90 reg_parse.c rfftmb.F90 rfftmf.F90 \
+rfftmi.F90 rsl_bcast.c sint.F90 start_domain.F90 start_em.F90 symtab_gen.c \
+task_for_point.c track_driver.F90 track_input.F90 type.c wrf_bdyin.F90 \
+wrf_bdyout.F90 wrf_debug.F90 wrf_ext_read_field.F90 wrf_ext_write_field.F90 \
+wrf_io.F90 wrf_num_bytes_between.c wrf_timeseries.F90 wrf_tsin.F90 xercon.F90 \
+xerfft.F90)
+
 SPEC_CFLAGS += -DSPEC -DNDEBUG -Isrc -Isrc/netcdf/include -Isrc/inc -DSTUBMPI -DSPEC_AUTO_SUPPRESS_OPENMP -DSPEC_AUTO_BYTEORDER=0x12345678 -DSPEC_CASE_FLAG -DSPEC_LP64
 SPEC_CXXFLAGS +=
 SPEC_FFLAGS += -I. -Inetcdf/include -Iinc -DSTUBMPI -DSPEC_AUTO_SUPPRESS_OPENMP -fconvert=big-endian -ffree-line-length-none -fallow-invalid-boz
@@ -410,17 +490,22 @@ $(DST_DIR)/src/$(addsuffix $(OBJ_SUFFIX), wrf_fddaobs_in.fppized): src/wrf_fddao
 $(DST_DIR)/src/$(addsuffix $(OBJ_SUFFIX), wrf_timeseries.fppized): src/wrf_timeseries.fppized.f90 $(addprefix $(DST_DIR)/src/,$(addsuffix $(OBJ_SUFFIX),$(basename ) module_configure.fppized module_dm.fppized module_domain.fppized module_llxy.fppized module_model_constants.fppized module_state_description.fppized))
 $(DST_DIR)/src/$(addsuffix $(OBJ_SUFFIX), wrf_tsin.fppized): src/wrf_tsin.fppized.f90 $(addprefix $(DST_DIR)/src/,$(addsuffix $(OBJ_SUFFIX),$(basename ) module_domain.fppized module_utility.fppized))
 
+$(HOST_DIR)/src/$(addsuffix $(OBJ_SUFFIX), diffwrf.fppized): src/diffwrf.fppized.f90 $(addprefix $(HOST_DIR)/src/,$(addsuffix $(OBJ_SUFFIX),$(basename ) wrf_io.fppized))
 
+refrate-cmp: $(VALIDATOR)
+	cd run && $(VALIDATOR) wrfout_d01_2000-01-24_20_00_00 ../data/refrate/compare/wrf_reference_01 > diffwrf_output_01.txt 2> diffwrf_output_01.err && cd ..
+	@for f in diffwrf_output_01.txt; do \
+		$(DIFF) -w run/$$f data/refrate/output/$$f; \
+	done
 
-refrate-cmp:
+train-cmp: $(VALIDATOR)
+	cd run && $(VALIDATOR) wrfout_d01_2000-01-24_14_00_00 ../data/train/compare/wrf_reference_01 > diffwrf_output_01.txt 2> diffwrf_output_01.err && cd ..
 	@for f in diffwrf_output_01.txt; do \
-		$(DIFF) run/$$f data/refrate/output/$$f; \
+		$(DIFF) -w run/$$f data/train/output/$$f; \
 	done
-train-cmp:
+
+test-cmp: $(VALIDATOR)
+	cd run && $(VALIDATOR) wrfout_d01_2000-01-24_12_10_00 ../data/test/compare/wrf_reference_01 > diffwrf_output_01.txt 2> diffwrf_output_01.err && cd ..
 	@for f in diffwrf_output_01.txt; do \
-		$(DIFF) run/$$f data/train/output/$$f; \
-	done
-test-cmp:
-	@for f in diffwrf_output_01.txt; do \
-		$(DIFF) run/$$f data/test/output/$$f; \
+		$(DIFF) -w run/$$f data/test/output/$$f; \
 	done
