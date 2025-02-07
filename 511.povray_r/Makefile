@@ -22,6 +22,11 @@ frontend/processrenderoptions.cpp frontend/renderfrontend.cpp \
 spec_qsort/spec_qsort.c \
 )
 
+VALIDATOR_REL = $(HOST_DIR)/imagevalidate_511
+VALIDATOR = $(abspath $(VALIDATOR_REL))
+
+VALIDATOR_SRCS = $(addprefix src/, image_validator/ImageValidator.c)
+
 SPEC_CFLAGS += -DSPEC -DNDEBUG -Isrc/frontend -Isrc/base -Isrc -Isrc/spec_qsort -DSPEC_AUTO_SUPPRESS_OPENMP
 SPEC_CXXFLAGS +=
 SPEC_FFLAGS +=
@@ -30,15 +35,18 @@ include $(SPEC_LITE)/Makefile.apps
 .PHONY: clean_preprocess_objs
 clean_preprocess_objs:
 
-refrate-cmp:
+refrate-cmp: $(VALIDATOR)
+	cd run && $(VALIDATOR) ../data/refrate/compare/SPEC-benchmark.org.tga SPEC-benchmark.tga > imagevalidate_SPEC-benchmark.tga.out 2> imagevalidate_SPEC-benchmark.tga.err && cd ..
 	@for f in imagevalidate_SPEC-benchmark.tga.out; do \
-		$(DIFF) run/$$f data/refrate/output/$$f; \
+		$(DIFF) -w run/$$f data/refrate/output/$$f; \
 	done
-train-cmp:
+train-cmp: $(VALIDATOR)
+	cd run && $(VALIDATOR) ../data/train/compare/SPEC-benchmark.org.tga SPEC-benchmark.tga > imagevalidate_SPEC-benchmark.tga.out 2> imagevalidate_SPEC-benchmark.tga.err && cd ..
 	@for f in imagevalidate_SPEC-benchmark.tga.out; do \
-		$(DIFF) run/$$f data/train/output/$$f; \
+		$(DIFF) -w run/$$f data/train/output/$$f; \
 	done
-test-cmp:
+test-cmp: $(VALIDATOR)
+	cd run && $(VALIDATOR) ../data/test/compare/SPEC-benchmark.org.tga SPEC-benchmark.tga > imagevalidate_SPEC-benchmark.tga.out 2> imagevalidate_SPEC-benchmark.tga.err && cd ..
 	@for f in imagevalidate_SPEC-benchmark.tga.out; do \
-		$(DIFF) run/$$f data/test/output/$$f; \
+		$(DIFF) -w run/$$f data/test/output/$$f; \
 	done
