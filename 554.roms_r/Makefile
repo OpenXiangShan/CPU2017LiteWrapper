@@ -52,7 +52,7 @@ mod_nesting.F90 esmf_roms.F90 master.F90 \
 )
 SPEC_CFLAGS +=
 SPEC_CXXFLAGS +=
-SPEC_FFLAGS += -fallow-argument-mismatch -mabi=lp64d -I$(abspath ./src)
+SPEC_FFLAGS += -fallow-argument-mismatch -I$(abspath ./src)
 SPECCPPFLAGS += -DSPEC -DNDEBUG -w -m literal-single.pm -m c-comment.pm -I$(abspath src) -DBENCHMARK -DNestedGrids=1 -DNO_GETTIMEOFDAY -DSPEC_AUTO_SUPPRESS_OPENMP -DSPEC_LP64
 
 LD_FORTRAN = 1
