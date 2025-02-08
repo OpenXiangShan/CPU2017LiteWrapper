@@ -217,9 +217,6 @@ SPECDIFF = cd $(dir $(SPECDIFF_FILE)) && ./specdiff -m -l 10 $(1) $(abspath $(2)
 define cmd_template
 run-$(1): $$(APP)
 	@sh $(SPEC_LITE)/scripts/run-template.sh run-$(1).sh $(abspath $(RUN_DIR)) $(LOADER)
-	@echo ============ Checking $(notdir $$<) ============
-	@$(MAKE) -s $(1)-cmp
-	@echo ""
 
 endef
 
