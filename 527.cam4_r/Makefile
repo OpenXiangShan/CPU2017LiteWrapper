@@ -121,6 +121,20 @@ netcdf/v2i.c netcdf/var.c netcdf/typeSizes.f90 netcdf/netcdf.f90 \
 spec_qsort/spec_qsort.c \
 )
 
+VALIDATOR_REL = $(HOST_DIR)/cam4_validate_527
+VALIDATOR = $(abspath $(VALIDATOR_REL))
+
+VALIDATOR_SRCS = $(addprefix src/, \
+validate-cam.f90 netcdf/attr.c netcdf/dim.c netcdf/error.c \
+netcdf/fort-attio.c netcdf/fort-control.c netcdf/fort-dim.c \
+netcdf/fort-genatt.c netcdf/fort-geninq.c netcdf/fort-genvar.c \
+netcdf/fort-lib.c netcdf/fort-misc.c netcdf/fort-v2compat.c \
+netcdf/fort-var1io.c netcdf/fort-varaio.c netcdf/fort-vario.c \
+netcdf/fort-varmio.c netcdf/fort-varsio.c netcdf/libvers.c \
+netcdf/nc.c netcdf/ncx.c netcdf/posixio.c netcdf/putget.c \
+netcdf/string.c netcdf/v1hpg.c netcdf/v2i.c netcdf/var.c \
+netcdf/typeSizes.f90 netcdf/netcdf.f90 spec_qsort/spec_qsort.c)
+
 SPEC_CFLAGS += -DSPEC -DNDEBUG  -DNO_SHR_VMATH -DCO2A -DPERGRO -DPLON=144 -DPLAT=96 -DPLEV=26 -DPCNST=3 -DPCOLS=4 -DPTRM=1 -DPTRN=1 -DPTRK=1 -DSTAGGERED -D_NETCDF -DNO_R16 -Isrc -Isrc/include -Isrc/netcdf/include -DSPEC_AUTO_SUPPRESS_OPENMP -DSPEC_AUTO_BYTEORDER=0x12345678 -DSPEC_CASE_FLAG -DSPEC_LP64
 SPEC_CXXFLAGS +=
 SPEC_FFLAGS += -I. -Iinclude -Inetcdf/include -Inetcdf -ffree-line-length-none
@@ -542,15 +556,18 @@ $(DST_DIR)/src/$(addsuffix $(OBJ_SUFFIX), zenith.fppized): src/zenith.fppized.f9
 $(DST_DIR)/src/$(addsuffix $(OBJ_SUFFIX), zm_conv.fppized): src/zm_conv.fppized.f90 $(addprefix $(DST_DIR)/src/,$(addsuffix $(OBJ_SUFFIX),$(basename ) abortutils.fppized cam_logfile.fppized cldwat.fppized constituents.fppized dycore.fppized mpishorthand.fppized namelist_utils.fppized phys_control.fppized phys_grid.fppized physconst.fppized ppgrid.fppized shr_kind_mod.fppized spmd_utils.fppized units.fppized wv_saturation.fppized))
 $(DST_DIR)/src/$(addsuffix $(OBJ_SUFFIX), zm_conv_intr.fppized): src/zm_conv_intr.fppized.f90 $(addprefix $(DST_DIR)/src/,$(addsuffix $(OBJ_SUFFIX),$(basename ) cam_history.fppized cam_logfile.fppized check_energy.fppized constituents.fppized error_messages.fppized perf_mod.fppized phys_buffer.fppized phys_control.fppized phys_grid.fppized physconst.fppized physics_types.fppized pmgrid.fppized ppgrid.fppized shr_kind_mod.fppized spmd_utils.fppized time_manager.fppized zm_conv.fppized))
 
-refrate-cmp:
+refrate-cmp: $(VALIDATOR)
+	cd $(RUN_DIR) && $(VALIDATOR) 10 0.0035 ../data/refrate/compare/h0_ctrl.nc h0.nc > cam4_validate.txt 2> cam4_validate.err && cd $${OLDPWD}
 	@for f in cam4_validate.txt; do \
 		$(DIFF) -w $(RUN_DIR)/$$f data/refrate/output/$$f; \
 	done
-train-cmp:
+train-cmp: $(VALIDATOR)
+	cd $(RUN_DIR) && $(VALIDATOR) 10 0.0035 ../data/train/compare/h0_ctrl.nc h0.nc > cam4_validate.txt 2> cam4_validate.err && cd $${OLDPWD}
 	@for f in cam4_validate.txt; do \
 		$(DIFF) -w $(RUN_DIR)/$$f data/train/output/$$f; \
 	done
-test-cmp:
+test-cmp: $(VALIDATOR)
+	cd $(RUN_DIR) && $(VALIDATOR) 10 0.0035 ../data/test/compare/h0_ctrl.nc h0.nc > cam4_validate.txt 2> cam4_validate.err && cd $${OLDPWD}
 	@for f in cam4_validate.txt; do \
 		$(DIFF) -w $(RUN_DIR)/$$f data/test/output/$$f; \
 	done
