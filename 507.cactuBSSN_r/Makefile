@@ -257,13 +257,13 @@ $(DST_DIR)/src/$(addsuffix $(OBJ_SUFFIX), $(basename Fortran/cctk.f90)): src/For
 
 refrate-cmp:
 	@for f in gxx.xl spec_ref.out gxy.xl; do \
-		$(DIFF) run/$$f data/refrate/output/$$f; \
+		$(DIFF) $(RUN_DIR)/$$f data/refrate/output/$$f; \
 	done
 train-cmp:
 	@for f in gxx.xl gxy.xl spec_train.out; do \
-		$(DIFF) run/$$f data/train/output/$$f; \
+		$(DIFF) $(RUN_DIR)/$$f data/train/output/$$f; \
 	done
 test-cmp:
 	@for f in gxx.xl spec_test.out gxy.xl; do \
-		$(DIFF) run/$$f data/test/output/$$f; \
+		$(DIFF) $(RUN_DIR)/$$f data/test/output/$$f; \
 	done

@@ -3,21 +3,25 @@ WORK_DIR=`dirname $RUN_SH`
 FULLNAME=`basename $WORK_DIR`
 NAME=`echo $FULLNAME | sed -e 's/....//'`
 SIZE=`echo $1 | sed -e 's/.*run-\(.*\)\.sh$/\1/'`
-LOADER=$2
+RUN_DIR=$2
+LOADER=$3
+
+# TAG is RUN_DIR name without "run"
+TAG=`basename $RUN_DIR | sed -e 's/run//'`
 
 echo "Parparing data..."
-rm -rf $WORK_DIR/run
-mkdir -p $WORK_DIR/run
-if [ -d $WORK_DIR/data/all/input ];   then cp -r $WORK_DIR/data/all/input/*   $WORK_DIR/run/; fi
-if [ -d $WORK_DIR/data/$SIZE/input ]; then cp -r $WORK_DIR/data/$SIZE/input/* $WORK_DIR/run/; fi
+rm -rf $RUN_DIR
+mkdir -p $RUN_DIR
+if [ -d $WORK_DIR/data/all/input ];   then cp -r $WORK_DIR/data/all/input/*   $RUN_DIR/; fi
+if [ -d $WORK_DIR/data/$SIZE/input ]; then cp -r $WORK_DIR/data/$SIZE/input/* $RUN_DIR/; fi
 
 if [ -f $WORK_DIR/extra-data/$SIZE.sh ]; then
   echo "Parparing extra data..."
   sh $WORK_DIR/extra-data/$SIZE.sh
 fi
 
-cd $WORK_DIR/run
-TIME_LOG=$WORK_DIR/run/`basename $1`.timelog
+cd $RUN_DIR
+TIME_LOG=$WORK_DIR/logs/`basename $1`.timelog
 export TIME='%Uuser %Ssystem %Eelapsed %PCPU (%Xtext+%Ddata %Mmax)k\n%Iinputs+%Ooutputs (%Fmajor+%Rminor)pagefaults %Wswaps\n%e # elapsed in second'
 date | tee $TIME_LOG
 echo "@@@@@ Running $FULLNAME [$SIZE]..." | tee -a $TIME_LOG
@@ -29,5 +33,5 @@ if [ "$ARCH" != `uname -m` ]; then
     LOADER="qemu-$ARCH"
   fi
 fi
-APP="/usr/bin/time -a -o $TIME_LOG $LOADER $WORK_DIR/build/$FULLNAME" sh $RUN_SH
+APP="/usr/bin/time -a -o $TIME_LOG $LOADER $WORK_DIR/build$TAG/$FULLNAME" sh $RUN_SH
 cat $TIME_LOG

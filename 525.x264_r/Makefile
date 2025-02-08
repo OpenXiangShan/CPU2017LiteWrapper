@@ -26,13 +26,13 @@ clean_preprocess_objs:
 
 refrate-cmp:
 	@for f in imagevalidate_frame_1100.out imagevalidate_frame_200.out imagevalidate_frame_1249.out imagevalidate_frame_900.out imagevalidate_frame_700.out imagevalidate_frame_800.out imagevalidate_frame_999.out imagevalidate_frame_400.out imagevalidate_frame_600.out; do \
-		$(DIFF) run/$$f data/refrate/output/$$f; \
+		$(DIFF) $(RUN_DIR)/$$f data/refrate/output/$$f; \
 	done
 train-cmp:
 	@for f in imagevalidate_frame_141.out imagevalidate_frame_50.out imagevalidate_frame_100.out; do \
-		$(DIFF) run/$$f data/train/output/$$f; \
+		$(DIFF) $(RUN_DIR)/$$f data/train/output/$$f; \
 	done
 test-cmp:
 	@for f in imagevalidate_frame_50.out imagevalidate_frame_155.out imagevalidate_frame_100.out; do \
-		$(DIFF) run/$$f data/test/output/$$f; \
+		$(DIFF) $(RUN_DIR)/$$f data/test/output/$$f; \
 	done

@@ -557,17 +557,17 @@ $(DST_DIR)/src/$(addsuffix $(OBJ_SUFFIX), zm_conv.fppized): src/zm_conv.fppized.
 $(DST_DIR)/src/$(addsuffix $(OBJ_SUFFIX), zm_conv_intr.fppized): src/zm_conv_intr.fppized.f90 $(addprefix $(DST_DIR)/src/,$(addsuffix $(OBJ_SUFFIX),$(basename ) cam_history.fppized cam_logfile.fppized check_energy.fppized constituents.fppized error_messages.fppized perf_mod.fppized phys_buffer.fppized phys_control.fppized phys_grid.fppized physconst.fppized physics_types.fppized pmgrid.fppized ppgrid.fppized shr_kind_mod.fppized spmd_utils.fppized time_manager.fppized zm_conv.fppized))
 
 refrate-cmp: $(VALIDATOR)
-	cd run; $(VALIDATOR) 10 0.0035 ../data/refrate/compare/h0_ctrl.nc h0.nc > cam4_validate.txt 2> cam4_validate.err && cd ..
+	cd $(RUN_DIR) && $(VALIDATOR) 10 0.0035 ../data/refrate/compare/h0_ctrl.nc h0.nc > cam4_validate.txt 2> cam4_validate.err && cd ..
 	@for f in cam4_validate.txt; do \
-		$(DIFF) -w run/$$f data/refrate/output/$$f; \
+		$(DIFF) -w $(RUN_DIR)/$$f data/refrate/output/$$f; \
 	done
 train-cmp: $(VALIDATOR)
-	cd run; $(VALIDATOR) 10 0.0035 ../data/train/compare/h0_ctrl.nc h0.nc > cam4_validate.txt 2> cam4_validate.err && cd ..
+	cd $(RUN_DIR) && $(VALIDATOR) 10 0.0035 ../data/train/compare/h0_ctrl.nc h0.nc > cam4_validate.txt 2> cam4_validate.err && cd ..
 	@for f in cam4_validate.txt; do \
-		$(DIFF) -w run/$$f data/train/output/$$f; \
+		$(DIFF) -w $(RUN_DIR)/$$f data/train/output/$$f; \
 	done
 test-cmp: $(VALIDATOR)
-	cd run; $(VALIDATOR) 10 0.0035 ../data/test/compare/h0_ctrl.nc h0.nc > cam4_validate.txt 2> cam4_validate.err && cd ..
+	cd $(RUN_DIR) && $(VALIDATOR) 10 0.0035 ../data/test/compare/h0_ctrl.nc h0.nc > cam4_validate.txt 2> cam4_validate.err && cd ..
 	@for f in cam4_validate.txt; do \
-		$(DIFF) -w run/$$f data/test/output/$$f; \
+		$(DIFF) -w $(RUN_DIR)/$$f data/test/output/$$f; \
 	done

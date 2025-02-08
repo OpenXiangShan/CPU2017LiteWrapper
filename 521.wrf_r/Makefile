@@ -493,19 +493,19 @@ $(DST_DIR)/src/$(addsuffix $(OBJ_SUFFIX), wrf_tsin.fppized): src/wrf_tsin.fppize
 $(HOST_DIR)/src/$(addsuffix $(OBJ_SUFFIX), diffwrf.fppized): src/diffwrf.fppized.f90 $(addprefix $(HOST_DIR)/src/,$(addsuffix $(OBJ_SUFFIX),$(basename ) wrf_io.fppized))
 
 refrate-cmp: $(VALIDATOR)
-	cd run && $(VALIDATOR) wrfout_d01_2000-01-24_20_00_00 ../data/refrate/compare/wrf_reference_01 > diffwrf_output_01.txt 2> diffwrf_output_01.err && cd ..
+	cd $(RUN_DIR) && $(VALIDATOR) wrfout_d01_2000-01-24_20_00_00 ../data/refrate/compare/wrf_reference_01 > diffwrf_output_01.txt 2> diffwrf_output_01.err && cd ..
 	@for f in diffwrf_output_01.txt; do \
-		$(DIFF) -w run/$$f data/refrate/output/$$f; \
+		$(DIFF) -w $(RUN_DIR)/$$f data/refrate/output/$$f; \
 	done
 
 train-cmp: $(VALIDATOR)
-	cd run && $(VALIDATOR) wrfout_d01_2000-01-24_14_00_00 ../data/train/compare/wrf_reference_01 > diffwrf_output_01.txt 2> diffwrf_output_01.err && cd ..
+	cd $(RUN_DIR) && $(VALIDATOR) wrfout_d01_2000-01-24_14_00_00 ../data/train/compare/wrf_reference_01 > diffwrf_output_01.txt 2> diffwrf_output_01.err && cd ..
 	@for f in diffwrf_output_01.txt; do \
-		$(DIFF) -w run/$$f data/train/output/$$f; \
+		$(DIFF) -w $(RUN_DIR)/$$f data/train/output/$$f; \
 	done
 
 test-cmp: $(VALIDATOR)
-	cd run && $(VALIDATOR) wrfout_d01_2000-01-24_12_10_00 ../data/test/compare/wrf_reference_01 > diffwrf_output_01.txt 2> diffwrf_output_01.err && cd ..
+	cd $(RUN_DIR) && $(VALIDATOR) wrfout_d01_2000-01-24_12_10_00 ../data/test/compare/wrf_reference_01 > diffwrf_output_01.txt 2> diffwrf_output_01.err && cd ..
 	@for f in diffwrf_output_01.txt; do \
-		$(DIFF) -w run/$$f data/test/output/$$f; \
+		$(DIFF) -w $(RUN_DIR)/$$f data/test/output/$$f; \
 	done

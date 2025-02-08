@@ -1,8 +1,8 @@
 **/src
-**/build
+**/build*
 **/data
 **/host
-**/run
+**/run*
 **/host
 **/*_s
 scripts/*

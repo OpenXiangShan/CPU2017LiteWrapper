@@ -14,13 +14,13 @@ clean_preprocess_objs:
 
 refrate-cmp:
 	@for f in ref.out; do \
-		$(DIFF) run/$$f data/refrate/output/$$f; \
+		$(DIFF) $(RUN_DIR)/$$f data/refrate/output/$$f; \
 	done
 train-cmp:
 	@for f in train.out; do \
-		$(DIFF) run/$$f data/train/output/$$f; \
+		$(DIFF) $(RUN_DIR)/$$f data/train/output/$$f; \
 	done
 test-cmp:
 	@for f in test.out; do \
-		$(DIFF) run/$$f data/test/output/$$f; \
+		$(DIFF) $(RUN_DIR)/$$f data/test/output/$$f; \
 	done

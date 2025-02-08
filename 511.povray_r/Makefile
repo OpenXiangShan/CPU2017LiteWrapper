@@ -36,17 +36,17 @@ include $(SPEC_LITE)/Makefile.apps
 clean_preprocess_objs:
 
 refrate-cmp: $(VALIDATOR)
-	cd run && $(VALIDATOR) ../data/refrate/compare/SPEC-benchmark.org.tga SPEC-benchmark.tga > imagevalidate_SPEC-benchmark.tga.out 2> imagevalidate_SPEC-benchmark.tga.err && cd ..
+	cd $(RUN_DIR) && $(VALIDATOR) ../data/refrate/compare/SPEC-benchmark.org.tga SPEC-benchmark.tga > imagevalidate_SPEC-benchmark.tga.out 2> imagevalidate_SPEC-benchmark.tga.err && cd ..
 	@for f in imagevalidate_SPEC-benchmark.tga.out; do \
-		$(DIFF) -w run/$$f data/refrate/output/$$f; \
+		$(DIFF) -w $(RUN_DIR)/$$f data/refrate/output/$$f; \
 	done
 train-cmp: $(VALIDATOR)
-	cd run && $(VALIDATOR) ../data/train/compare/SPEC-benchmark.org.tga SPEC-benchmark.tga > imagevalidate_SPEC-benchmark.tga.out 2> imagevalidate_SPEC-benchmark.tga.err && cd ..
+	cd $(RUN_DIR) && $(VALIDATOR) ../data/train/compare/SPEC-benchmark.org.tga SPEC-benchmark.tga > imagevalidate_SPEC-benchmark.tga.out 2> imagevalidate_SPEC-benchmark.tga.err && cd ..
 	@for f in imagevalidate_SPEC-benchmark.tga.out; do \
-		$(DIFF) -w run/$$f data/train/output/$$f; \
+		$(DIFF) -w $(RUN_DIR)/$$f data/train/output/$$f; \
 	done
 test-cmp: $(VALIDATOR)
-	cd run && $(VALIDATOR) ../data/test/compare/SPEC-benchmark.org.tga SPEC-benchmark.tga > imagevalidate_SPEC-benchmark.tga.out 2> imagevalidate_SPEC-benchmark.tga.err && cd ..
+	cd $(RUN_DIR) && $(VALIDATOR) ../data/test/compare/SPEC-benchmark.org.tga SPEC-benchmark.tga > imagevalidate_SPEC-benchmark.tga.out 2> imagevalidate_SPEC-benchmark.tga.err && cd ..
 	@for f in imagevalidate_SPEC-benchmark.tga.out; do \
-		$(DIFF) -w run/$$f data/test/output/$$f; \
+		$(DIFF) -w $(RUN_DIR)/$$f data/test/output/$$f; \
 	done

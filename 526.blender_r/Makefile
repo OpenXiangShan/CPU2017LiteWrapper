@@ -1022,17 +1022,17 @@ include $(SPEC_LITE)/Makefile.apps
 clean_preprocess_objs:
 
 refrate-cmp: $(VALIDATOR)
-	cd run && $(VALIDATOR) -avg -threshold 0.75 -maxthreshold 0.01 sh3_no_char_0849.tga ../data/refrate/compare/sh3_no_char_0849.org.tga > imagevalidate_sh3_no_char_0849.out 2> imagevalidate_sh3_no_char_0849.err && cd ..
+	cd $(RUN_DIR) && $(VALIDATOR) -avg -threshold 0.75 -maxthreshold 0.01 sh3_no_char_0849.tga ../data/refrate/compare/sh3_no_char_0849.org.tga > imagevalidate_sh3_no_char_0849.out 2> imagevalidate_sh3_no_char_0849.err && cd ..
 	@for f in imagevalidate_sh3_no_char_0849.out; do \
-		$(DIFF) run/$$f data/refrate/output/$$f; \
+		$(DIFF) $(RUN_DIR)/$$f data/refrate/output/$$f; \
 	done
 train-cmp: $(VALIDATOR)
-	cd run && $(VALIDATOR) -avg -threshold 0.75 -maxthreshold 0.01 sh5_reduced_0234.tga ../data/train/compare/sh5_reduced_0234.org.tga > imagevalidate_sh5_reduced_0234.out 2> imagevalidate_sh5_reduced_0234.err && cd ..
+	cd $(RUN_DIR) && $(VALIDATOR) -avg -threshold 0.75 -maxthreshold 0.01 sh5_reduced_0234.tga ../data/train/compare/sh5_reduced_0234.org.tga > imagevalidate_sh5_reduced_0234.out 2> imagevalidate_sh5_reduced_0234.err && cd ..
 	@for f in imagevalidate_sh5_reduced_0234.out; do \
-		$(DIFF) run/$$f data/train/output/$$f; \
+		$(DIFF) $(RUN_DIR)/$$f data/train/output/$$f; \
 	done
 test-cmp: $(VALIDATOR)
-	cd run && $(VALIDATOR) -avg -threshold 0.75 -maxthreshold 0.01 cube_0001.tga ../data/test/compare/cube_0001.org.tga > imagevalidate_cube_0001.out 2> imagevalidate_cube_0001.err && cd ..
+	cd $(RUN_DIR) && $(VALIDATOR) -avg -threshold 0.75 -maxthreshold 0.01 cube_0001.tga ../data/test/compare/cube_0001.org.tga > imagevalidate_cube_0001.out 2> imagevalidate_cube_0001.err && cd ..
 	@for f in imagevalidate_cube_0001.out; do \
-		$(DIFF) run/$$f data/test/output/$$f; \
+		$(DIFF) $(RUN_DIR)/$$f data/test/output/$$f; \
 	done

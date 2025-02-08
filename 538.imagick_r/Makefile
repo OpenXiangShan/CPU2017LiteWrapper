@@ -42,17 +42,17 @@ include $(SPEC_LITE)/Makefile.apps
 clean_preprocess_objs:
 
 refrate-cmp: $(VALIDATOR)
-	cd run; $(VALIDATOR) -avg -threshold 0.95 -maxthreshold 0.001 refrate_output.tga ../data/refrate/compare/refrate_expected.tga > refrate_validate.out 2> refrate_validate.err; cd ..
+	cd $(RUN_DIR) && $(VALIDATOR) -avg -threshold 0.95 -maxthreshold 0.001 refrate_output.tga ../data/refrate/compare/refrate_expected.tga > refrate_validate.out 2> refrate_validate.err; cd ..
 	@for f in refrate_validate.out; do \
-		$(DIFF) run/$$f data/refrate/output/$$f; \
+		$(DIFF) $(RUN_DIR)/$$f data/refrate/output/$$f; \
 	done
 train-cmp: $(VALIDATOR)
-	cd run; $(VALIDATOR) -avg -threshold 0.95 -maxthreshold 0.001 train_output.tga ../data/train/compare/train_expected.tga > train_validate.out 2> train_validate.err; cd ..
+	cd $(RUN_DIR) && $(VALIDATOR) -avg -threshold 0.95 -maxthreshold 0.001 train_output.tga ../data/train/compare/train_expected.tga > train_validate.out 2> train_validate.err; cd ..
 	@for f in train_validate.out; do \
-		$(DIFF) run/$$f data/train/output/$$f; \
+		$(DIFF) $(RUN_DIR)/$$f data/train/output/$$f; \
 	done
 test-cmp: $(VALIDATOR)
-	cd run; $(VALIDATOR) -avg -threshold 0.95 -maxthreshold 0.001 test_output.tga ../data/test/compare/test_expected.tga > test_validate.out 2> test_validate.err; cd ..
+	cd $(RUN_DIR) && $(VALIDATOR) -avg -threshold 0.95 -maxthreshold 0.001 test_output.tga ../data/test/compare/test_expected.tga > test_validate.out 2> test_validate.err; cd ..
 	@for f in test_validate.out; do \
-		$(DIFF) run/$$f data/test/output/$$f; \
+		$(DIFF) $(RUN_DIR)/$$f data/test/output/$$f; \
 	done
