@@ -1008,6 +1008,11 @@ libpng/pngrtran.c libpng/pngwtran.c libpng/pngrio.c libpng/pngwio.c \
 specrand/specrand.c spec_backtrace.c \
 )
 
+VALIDATOR_REL = $(HOST_DIR)/imagevalidate_526
+VALIDATOR = $(abspath $(VALIDATOR_REL))
+
+VALIDATOR_SRCS = $(addprefix src/, image_validator/ImageValidator.c)
+
 SPEC_CFLAGS += -Isrc/specrand -Isrc/blender/extern/binreloc/include -Isrc/blender/extern/colamd/Include -Isrc/blender/extern/glew/include -Isrc/blender/extern/libmv -Isrc/blender/extern/libmv/intern -Isrc/blender/extern/rangetree -Isrc/blender/extern/wcwidth -Isrc/blender/intern -Isrc/blender/intern/atomic -Isrc/blender/intern/audaspace/intern -Isrc/blender/intern/cycles/blender -Isrc/blender/intern/elbeem/extern -Isrc/blender/intern/ghost -Isrc/blender/intern/ghost/intern -Isrc/blender/intern/glew-mx -Isrc/blender/intern/glew-mx/intern -Isrc/blender/intern/guardedalloc -Isrc/blender/intern/guardedalloc/intern -Isrc/blender/intern/iksolver/extern -Isrc/blender/intern/locale -Isrc/blender/intern/memutil -Isrc/blender/intern/mikktspace -Isrc/blender/intern/opencolorio -Isrc/blender/intern/raskter -Isrc/blender/intern/smoke/extern -Isrc/blender/intern/string -Isrc/blender/intern/utfconv -Isrc/blender/source/blender/blenfont -Isrc/blender/source/blender/blenfont/intern -Isrc/blender/source/blender/blenkernel -Isrc/blender/source/blender/blenkernel/intern -Isrc/blender/source/blender/blenlib -Isrc/blender/source/blender/blenlib/intern -Isrc/blender/source/blender/blenloader -Isrc/blender/source/blender/blenloader/intern -Isrc/blender/source/blender/bmesh -Isrc/blender/source/blender/bmesh/intern -Isrc/blender/source/blender/bmesh/tools -Isrc/blender/source/blender/collada -Isrc/blender/source/blender/compositor -Isrc/blender/source/blender/editors/animation -Isrc/blender/source/blender/editors/armature -Isrc/blender/source/blender/editors/curve -Isrc/blender/source/blender/editors/gpencil -Isrc/blender/source/blender/editors/include -Isrc/blender/source/blender/editors/interface -Isrc/blender/source/blender/editors/io -Isrc/blender/source/blender/editors/mask -Isrc/blender/source/blender/editors/mesh -Isrc/blender/source/blender/editors/metaball -Isrc/blender/source/blender/editors/object -Isrc/blender/source/blender/editors/physics -Isrc/blender/source/blender/editors/render -Isrc/blender/source/blender/editors/screen -Isrc/blender/source/blender/editors/sculpt_paint -Isrc/blender/source/blender/editors/sound -Isrc/blender/source/blender/editors/space_action -Isrc/blender/source/blender/editors/space_buttons -Isrc/blender/source/blender/editors/space_clip -Isrc/blender/source/blender/editors/space_console -Isrc/blender/source/blender/editors/space_file -Isrc/blender/source/blender/editors/space_graph -Isrc/blender/source/blender/editors/space_image -Isrc/blender/source/blender/editors/space_info -Isrc/blender/source/blender/editors/space_logic -Isrc/blender/source/blender/editors/space_nla -Isrc/blender/source/blender/editors/space_node -Isrc/blender/source/blender/editors/space_outliner -Isrc/blender/source/blender/editors/space_script -Isrc/blender/source/blender/editors/space_sequencer -Isrc/blender/source/blender/editors/space_text -Isrc/blender/source/blender/editors/space_time -Isrc/blender/source/blender/editors/space_userpref -Isrc/blender/source/blender/editors/space_view3d -Isrc/blender/source/blender/editors/transform -Isrc/blender/source/blender/editors/util -Isrc/blender/source/blender/editors/uvedit -Isrc/blender/source/blender/gpu -Isrc/blender/source/blender/gpu/intern -Isrc/blender/source/blender/ikplugin -Isrc/blender/source/blender/ikplugin/intern -Isrc/blender/source/blender/imbuf -Isrc/blender/source/blender/imbuf/intern -Isrc/blender/source/blender/imbuf/intern/openexr -Isrc/blender/source/blender/makesdna -Isrc/blender/source/blender/makesrna -Isrc/blender/source/blender/makesrna/intern -Isrc/blender/source/blender/modifiers -Isrc/blender/source/blender/modifiers/intern -Isrc/blender/source/blender/nodes -Isrc/blender/source/blender/nodes/composite -Isrc/blender/source/blender/nodes/intern -Isrc/blender/source/blender/nodes/shader -Isrc/blender/source/blender/nodes/texture -Isrc/blender/source/blender/python -Isrc/blender/source/blender/render/extern/include -Isrc/blender/source/blender/render/intern/include -Isrc/blender/source/blender/render/intern/raytrace -Isrc/blender/source/blender/windowmanager -Isrc/blender/source/gameengine/BlenderRoutines -Isrc/blender_bin/source/blender/makesrna/intern -Isrc/include -Isrc/libpng -Isrc/zlib -DSPEC_AUTO_SUPPRESS_OPENMP -DSPEC_AUTO_BYTEORDER=0x12345678 -DGLEW_NO_ES -DGLEW_STATIC -DWITH_DNA_GHASH -DWITH_GL_PROFILE_COMPAT -DWITH_HEADLESS -DHAVE_UNSIGNED_CHAR -DSPEC_LINUX -funsigned-char -DSPEC_LP64
 SPEC_CXXFLAGS +=
 SPEC_FFLAGS +=
@@ -1016,15 +1021,18 @@ include $(SPEC_LITE)/Makefile.apps
 .PHONY: clean_preprocess_objs
 clean_preprocess_objs:
 
-refrate-cmp:
+refrate-cmp: $(VALIDATOR)
+	cd $(RUN_DIR) && $(VALIDATOR) -avg -threshold 0.75 -maxthreshold 0.01 sh3_no_char_0849.tga ../data/refrate/compare/sh3_no_char_0849.org.tga > imagevalidate_sh3_no_char_0849.out 2> imagevalidate_sh3_no_char_0849.err && cd $${OLDPWD}
 	@for f in imagevalidate_sh3_no_char_0849.out; do \
-		$(DIFF) $(RUN_DIR)/$$f data/refrate/output/$$f; \
+		$(call SPECDIFF, --reltol 0.05, $(RUN_DIR)/$$f, data/refrate/output/$$f); \
 	done
-train-cmp:
+train-cmp: $(VALIDATOR)
+	cd $(RUN_DIR) && $(VALIDATOR) -avg -threshold 0.75 -maxthreshold 0.01 sh5_reduced_0234.tga ../data/train/compare/sh5_reduced_0234.org.tga > imagevalidate_sh5_reduced_0234.out 2> imagevalidate_sh5_reduced_0234.err && cd $${OLDPWD}
 	@for f in imagevalidate_sh5_reduced_0234.out; do \
-		$(DIFF) $(RUN_DIR)/$$f data/train/output/$$f; \
+		$(call SPECDIFF, --reltol 0.05, $(RUN_DIR)/$$f, data/train/output/$$f); \
 	done
-test-cmp:
+test-cmp: $(VALIDATOR)
+	cd $(RUN_DIR) && $(VALIDATOR) -avg -threshold 0.75 -maxthreshold 0.01 cube_0001.tga ../data/test/compare/cube_0001.org.tga > imagevalidate_cube_0001.out 2> imagevalidate_cube_0001.err && cd $${OLDPWD}
 	@for f in imagevalidate_cube_0001.out; do \
-		$(DIFF) $(RUN_DIR)/$$f data/test/output/$$f; \
+		$(call SPECDIFF, --reltol 0.05, $(RUN_DIR)/$$f, data/test/output/$$f); \
 	done

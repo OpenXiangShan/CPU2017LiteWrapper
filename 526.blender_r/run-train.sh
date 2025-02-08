@@ -1,0 +1,1 @@
+$APP sh5_reduced.blend --render-output sh5_reduced_ --threads 1 -b -F RAWTGA -s 234 -e 234 -a > sh5_reduced.234.spec.out 2> sh5_reduced.234.spec.err
