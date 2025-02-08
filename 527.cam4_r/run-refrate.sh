@@ -1,0 +1,1 @@
+$APP > cam4.txt 2> cam4.err
