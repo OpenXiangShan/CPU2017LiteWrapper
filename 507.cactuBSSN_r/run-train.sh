@@ -1,0 +1,1 @@
+$APP spec_train.par > spec_train.out 2> spec_train.err
