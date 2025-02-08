@@ -23,7 +23,7 @@ for dir in os.listdir(pathlib.Path(__file__).parent.parent.resolve()):
             bench_size_dir = data_dir / bench_size
             buf.append(f"{bench_size}-cmp:")
             buf.append(f"\t@for f in {' '.join(os.listdir(bench_size_dir / 'output'))}; do \\")
-            buf.append(f"\t\t$(DIFF) run/$$f data/{bench_size}/output/$$f; \\")
+            buf.append(f"\t\t$(DIFF) $(RUN_DIR)/$$f data/{bench_size}/output/$$f; \\")
             buf.append("\tdone")
         with open(testcase_dir / 'Makefile', 'a') as f:
             f.write('\n'.join(buf))

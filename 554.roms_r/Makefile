@@ -183,13 +183,13 @@ $(DST_DIR)/src/$(addsuffix $(OBJ_SUFFIX), zetabc.fppized): src/zetabc.fppized.f9
 
 refrate-cmp:
 	@for f in ocean_benchmark2.log; do \
-		$(DIFF) run/$$f data/refrate/output/$$f; \
+		$(DIFF) $(RUN_DIR)/$$f data/refrate/output/$$f; \
 	done
 train-cmp:
 	@for f in ocean_benchmark1.log; do \
-		$(DIFF) run/$$f data/train/output/$$f; \
+		$(DIFF) $(RUN_DIR)/$$f data/train/output/$$f; \
 	done
 test-cmp:
 	@for f in ocean_benchmark0.log; do \
-		$(DIFF) run/$$f data/test/output/$$f; \
+		$(DIFF) $(RUN_DIR)/$$f data/test/output/$$f; \
 	done

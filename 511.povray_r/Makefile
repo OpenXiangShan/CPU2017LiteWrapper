@@ -32,13 +32,13 @@ clean_preprocess_objs:
 
 refrate-cmp:
 	@for f in imagevalidate_SPEC-benchmark.tga.out; do \
-		$(DIFF) run/$$f data/refrate/output/$$f; \
+		$(DIFF) -w $(RUN_DIR)/$$f data/refrate/output/$$f; \
 	done
 train-cmp:
 	@for f in imagevalidate_SPEC-benchmark.tga.out; do \
-		$(DIFF) run/$$f data/train/output/$$f; \
+		$(DIFF) -w $(RUN_DIR)/$$f data/train/output/$$f; \
 	done
 test-cmp:
 	@for f in imagevalidate_SPEC-benchmark.tga.out; do \
-		$(DIFF) run/$$f data/test/output/$$f; \
+		$(DIFF) -w $(RUN_DIR)/$$f data/test/output/$$f; \
 	done

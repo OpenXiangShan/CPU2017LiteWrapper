@@ -87,13 +87,13 @@ clean_preprocess_objs:
 
 refrate-cmp:
 	@for f in ref32.opts-O5.s gcc-pp.opts-O3_-finline-limit_0_-fif-conversion_-fif-conversion2.s ref32.opts-O3_-fselective-scheduling_-fselective-scheduling2.s gcc-pp.opts-O2_-finline-limit_36000_-fpic.s gcc-smaller.opts-O3_-fipa-pta.s; do \
-		$(DIFF) run/$$f data/refrate/output/$$f; \
+		$(DIFF) $(RUN_DIR)/$$f data/refrate/output/$$f; \
 	done
 train-cmp:
 	@for f in 200.opts-O3_-finline-limit_50000.s scilab.opts-O3_-finline-limit_50000.s train01.opts-O3_-finline-limit_50000.s; do \
-		$(DIFF) run/$$f data/train/output/$$f; \
+		$(DIFF) $(RUN_DIR)/$$f data/train/output/$$f; \
 	done
 test-cmp:
 	@for f in t1.opts-O3_-finline-limit_50000.s; do \
-		$(DIFF) run/$$f data/test/output/$$f; \
+		$(DIFF) $(RUN_DIR)/$$f data/test/output/$$f; \
 	done

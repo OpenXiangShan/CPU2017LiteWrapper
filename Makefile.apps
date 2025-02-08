@@ -2,7 +2,8 @@ SPEC ?=
 #include $(SPEC_LITE)/scripts/$(ARCH).mk
 
 WORK_DIR = .
-DST_DIR = $(WORK_DIR)/build
+DST_DIR = $(WORK_DIR)/build$(TAG)
+RUN_DIR = $(WORK_DIR)/run$(TAG)
 $(shell mkdir -p $(DST_DIR))
 
 ### Files to be linked: object files (`.o`) and libraries (`.a`)
@@ -115,7 +116,7 @@ src/%.fppized.f: src/%.F
 #APP_REL = build/$(NAME)_$(patsubst % %, %_%, $(COPTIMIZE_FLAGS))
 #APP     = $(abspath $(APP_REL))
 
-APP_REL = build/$(NAME)
+APP_REL = $(DST_DIR)/$(NAME)
 APP = $(abspath $(APP_REL))
 
 ifeq ($(MAKECMDGOALS),)
@@ -135,8 +136,8 @@ SPECDIFF = cd $(dir $(SPECDIFF_FILE)) && ./specdiff -m -l 10 $(1) $(abspath $(2)
 
 # prototype: cmd_template(size)
 define cmd_template
-run-$(1): $$(APP)$$(TAG)
-	@sh $(SPEC_LITE)/scripts/run-template.sh run-$(1).sh $(LOADER)
+run-$(1): $$(APP)
+	@sh $(SPEC_LITE)/scripts/run-template.sh run-$(1).sh $(abspath $(RUN_DIR)) $(LOADER)
 	@echo ============ Checking $(notdir $$<) ============
 	@$(MAKE) -s $(1)-cmp
 	@echo ""
@@ -163,7 +164,7 @@ copy-data:
 
 .PHONY: clean
 clean: clean_preprocess_objs
-	@rm -rf ./build
+	@rm -rf $(DST_DIR)
 
 .PHONY: clean-all
 clean-all: clean clean-src

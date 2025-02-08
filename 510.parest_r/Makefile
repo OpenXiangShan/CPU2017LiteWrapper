@@ -149,13 +149,13 @@ clean_preprocess_objs:
 
 refrate-cmp:
 	@for f in 003-m00.vtk 004-m00.vtk 001-m00.vtk 002-m00.vtk statistics me.prm 006-m00.vtk 007-m00.vtk log 005-m00.vtk; do \
-		$(DIFF) run/$$f data/refrate/output/$$f; \
+		$(DIFF) $(RUN_DIR)/$$f data/refrate/output/$$f; \
 	done
 train-cmp:
 	@for f in statistics me.prm 001-m0.vtk log 002-m0.vtk; do \
-		$(DIFF) run/$$f data/train/output/$$f; \
+		$(DIFF) $(RUN_DIR)/$$f data/train/output/$$f; \
 	done
 test-cmp:
 	@for f in statistics me.prm 001-m0.vtk log; do \
-		$(DIFF) run/$$f data/test/output/$$f; \
+		$(DIFF) $(RUN_DIR)/$$f data/test/output/$$f; \
 	done

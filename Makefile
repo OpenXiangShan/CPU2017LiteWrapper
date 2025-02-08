@@ -120,15 +120,15 @@ validate-fp-$(1):
 
 run-%-$(1):
 	echo "Running $(1) on $$*"
-	@$(MAKE) -s -C $$* run-$(1) > $$*/build/run-$(1).log
+	@$(MAKE) -s -C $$* run-$(1) > $$*/logs/run-$(1).log
 
 report-int-$(1):
-	for t in $$(SPECINTRATE); do cat $$$$t/run/run-$(1).sh.timelog; echo ""; done
-	for t in $$(SPECINTRATE); do cat $$$$t/run/run-$(1).sh.timelog | grep "# elapsed in second" | sed -e "s/#.*/\t$$$$t/"; done
+	for t in $$(SPECINTRATE); do cat $$$$t/logs/run-$(1).sh.timelog; echo ""; done
+	for t in $$(SPECINTRATE); do cat $$$$t/logs/run-$(1).sh.timelog | grep "# elapsed in second" | sed -e "s/#.*/\t$$$$t/"; done
 
 report-fp-$(1):
-	for t in $$(SPECFPRATE); do cat $$$$t/run/run-$(1).sh.timelog; echo ""; done
-	for t in $$(SPECFPRATE); do cat $$$$t/run/run-$(1).sh.timelog | grep "# elapsed in second" | sed -e "s/#.*/\t$$$$t/"; done
+	for t in $$(SPECFPRATE); do cat $$$$t/logs/run-$(1).sh.timelog; echo ""; done
+	for t in $$(SPECFPRATE); do cat $$$$t/logs/run-$(1).sh.timelog | grep "# elapsed in second" | sed -e "s/#.*/\t$$$$t/"; done
 
 endef
 
