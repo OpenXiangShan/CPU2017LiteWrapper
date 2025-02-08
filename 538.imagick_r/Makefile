@@ -27,6 +27,12 @@ wand/magick-wand.c wand/mogrify.c wand/pixel-wand.c \
 wand/magick-property.c wand/pixel-iterator.c wand/wand.c \
 magick/deprecate.c \
 )
+
+VALIDATOR_REL = $(HOST_DIR)/imagevalidate_538
+VALIDATOR = $(abspath $(VALIDATOR_REL))
+
+VALIDATOR_SRCS = $(addprefix src/, image_validator/ImageValidator.c)
+
 SPEC_CFLAGS += -Isrc -DSPEC_AUTO_SUPPRESS_OPENMP
 SPEC_CXXFLAGS +=
 SPEC_FFLAGS +=
@@ -35,15 +41,18 @@ include $(SPEC_LITE)/Makefile.apps
 .PHONY: clean_preprocess_objs
 clean_preprocess_objs:
 
-refrate-cmp:
+refrate-cmp: $(VALIDATOR)
+	cd $(RUN_DIR) && $(VALIDATOR) -avg -threshold 0.95 -maxthreshold 0.001 refrate_output.tga ../data/refrate/compare/refrate_expected.tga > refrate_validate.out 2> refrate_validate.err && cd $${OLDPWD}
 	@for f in refrate_validate.out; do \
-		$(DIFF) $(RUN_DIR)/$$f data/refrate/output/$$f; \
+		$(call SPECDIFF, --reltol 0.01, $(RUN_DIR)/$$f, data/refrate/output/$$f); \
 	done
-train-cmp:
+train-cmp: $(VALIDATOR)
+	cd $(RUN_DIR) && $(VALIDATOR) -avg -threshold 0.95 -maxthreshold 0.001 train_output.tga ../data/train/compare/train_expected.tga > train_validate.out 2> train_validate.err && cd $${OLDPWD}
 	@for f in train_validate.out; do \
-		$(DIFF) $(RUN_DIR)/$$f data/train/output/$$f; \
+		$(call SPECDIFF, --reltol 0.01, $(RUN_DIR)/$$f, data/train/output/$$f); \
 	done
-test-cmp:
+test-cmp: $(VALIDATOR)
+	cd $(RUN_DIR) && $(VALIDATOR) -avg -threshold 0.95 -maxthreshold 0.001 test_output.tga ../data/test/compare/test_expected.tga > test_validate.out 2> test_validate.err && cd $${OLDPWD}
 	@for f in test_validate.out; do \
-		$(DIFF) $(RUN_DIR)/$$f data/test/output/$$f; \
+		$(call SPECDIFF, --reltol 0.01, $(RUN_DIR)/$$f, data/test/output/$$f); \
 	done
