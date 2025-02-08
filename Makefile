@@ -122,6 +122,9 @@ run-%-$(1):
 	echo "Running $(1) on $$*"
 	@$(MAKE) -s -C $$* run-$(1) > $$*/logs/run-$(1).log
 
+validate-%-$(1):
+	@$(MAKE) -s -C $$* $(1)-cmp
+
 report-int-$(1):
 	for t in $$(SPECINT); do cat $$$$t/logs/run-$(1).sh.timelog; echo ""; done
 	for t in $$(SPECINT); do cat $$$$t/logs/run-$(1).sh.timelog | grep "# elapsed in second" | sed -e "s/#.*/\t$$$$t/"; done
