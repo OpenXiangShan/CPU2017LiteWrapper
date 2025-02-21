@@ -33,6 +33,16 @@ VALIDATOR_OBJS := $(patsubst %.cpp,%.o,$(VALIDATOR_OBJS))
 VALIDATOR_OBJS := $(patsubst %.cc,%.o,$(VALIDATOR_OBJS))
 VALIDATOR_OBJS := $(addprefix $(HOST_DIR)/, $(VALIDATOR_OBJS))
 
+DATAPREPARE_OBJS := $(patsubst %.F,%.fppized.o,$(DATAPREPARE_SRCS))
+DATAPREPARE_OBJS := $(patsubst %.F90,%.fppized.o,$(DATAPREPARE_OBJS))
+DATAPREPARE_OBJS := $(patsubst %.f90,%.o,$(DATAPREPARE_OBJS))
+DATAPREPARE_OBJS := $(patsubst %.f,%.o,$(DATAPREPARE_OBJS))
+DATAPREPARE_OBJS := $(patsubst %.c,%.o,$(DATAPREPARE_OBJS))
+DATAPREPARE_OBJS := $(patsubst %.C,%.o,$(DATAPREPARE_OBJS))
+DATAPREPARE_OBJS := $(patsubst %.cpp,%.o,$(DATAPREPARE_OBJS))
+DATAPREPARE_OBJS := $(patsubst %.cc,%.o,$(DATAPREPARE_OBJS))
+DATAPREPARE_OBJS := $(addprefix $(HOST_DIR)/, $(DATAPREPARE_OBJS))
+
 CROSS_COMPILE ?=
 CC  = $(CROSS_COMPILE)gcc
 CXX = $(CROSS_COMPILE)g++
@@ -206,6 +216,10 @@ $(APP): $(PREPROCESS_OBJS) $(OBJS)
 $(VALIDATOR): $(VALIDATOR_OBJS)
 	@echo + LD "->" $(VALIDATOR_REL)
 	@$(HOST_LD) -o $(abspath $@) $(VALIDATOR_OBJS) $(HOST_LDFLAGS)
+
+$(DATAPREPARE): $(DATAPREPARE_OBJS)
+	@echo + LD "->" $(DATAPREPARE_REL)
+	@$(HOST_LD) -o $(abspath $@) $(DATAPREPARE_OBJS) $(HOST_LDFLAGS)
 
 ## 5. Running Rules
 
