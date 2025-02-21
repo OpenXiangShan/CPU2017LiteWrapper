@@ -246,8 +246,9 @@ copy-src:
 	@chmod -R +w src
 
 .PHONY: copy-data
-copy-data:
+copy-data: $(DATAPREPARE)
 	@cp -r $(SPEC)/benchspec/CPU/$(NAME)/data ./
+	@! (stat prepare-data.sh > /dev/null 2> /dev/null) || sh prepare-data.sh $(DATAPREPARE) > /dev/null
 	@chmod -R +w data
 
 .PHONY: clean
