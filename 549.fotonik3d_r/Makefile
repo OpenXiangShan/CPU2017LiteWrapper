@@ -37,13 +37,13 @@ clean_preprocess_objs:
 
 refrate-cmp:
 	@for f in pscyee.out; do \
-		$(DIFF) $(RUN_DIR)/$$f data/refrate/output/$$f; \
+		$(call SPECDIFF, --abstol 1e-27 --reltol 1e-10 --obiwan --floatcompare, $(RUN_DIR)/$$f,  data/refrate/output/$$f); \
 	done
 train-cmp:
 	@for f in pscyee.out; do \
-		$(DIFF) $(RUN_DIR)/$$f data/train/output/$$f; \
+		$(call SPECDIFF, --abstol 1e-27 --reltol 1e-10 --obiwan --floatcompare, $(RUN_DIR)/$$f,  data/train/output/$$f); \
 	done
 test-cmp:
 	@for f in pscyee.out; do \
-		$(DIFF) $(RUN_DIR)/$$f data/test/output/$$f; \
+		$(call SPECDIFF, --abstol 1e-27 --reltol 1e-10 --obiwan --floatcompare, $(RUN_DIR)/$$f,  data/test/output/$$f); \
 	done
