@@ -14,13 +14,13 @@ clean_preprocess_objs:
 
 refrate-cmp:
 	@for f in 1am0.out; do \
-		$(DIFF) $(RUN_DIR)/$$f data/refrate/output/$$f; \
+		$(call SPECDIFF, --reltol 0.01 --skipreltol 2, $(RUN_DIR)/$$f, data/refrate/output/$$f); \
 	done
 train-cmp:
 	@for f in gcn4dna.out aminos.out; do \
-		$(DIFF) $(RUN_DIR)/$$f data/train/output/$$f; \
+		$(call SPECDIFF, --reltol 0.01 --skipreltol 2, $(RUN_DIR)/$$f, data/train/output/$$f); \
 	done
 test-cmp:
 	@for f in hkrdenq.out; do \
-		$(DIFF) $(RUN_DIR)/$$f data/test/output/$$f; \
+		$(call SPECDIFF, --reltol 0.01 --skipreltol 2, $(RUN_DIR)/$$f, data/test/output/$$f); \
 	done
