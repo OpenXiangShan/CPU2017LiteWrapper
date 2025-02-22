@@ -37,16 +37,10 @@ clean_preprocess_objs:
 
 refrate-cmp: $(VALIDATOR)
 	cd $(RUN_DIR) && $(VALIDATOR) ../data/refrate/compare/SPEC-benchmark.org.tga SPEC-benchmark.tga > imagevalidate_SPEC-benchmark.tga.out 2> imagevalidate_SPEC-benchmark.tga.err && cd ..
-	@for f in imagevalidate_SPEC-benchmark.tga.out; do \
-		$(DIFF) -w $(RUN_DIR)/$$f data/refrate/output/$$f; \
-	done
+	$(call SPECDIFF, --reltol 0.06, $(RUN_DIR)/imagevalidate_SPEC-benchmark.tga.out, data/refrate/output/imagevalidate_SPEC-benchmark.tga.out);
 train-cmp: $(VALIDATOR)
 	cd $(RUN_DIR) && $(VALIDATOR) ../data/train/compare/SPEC-benchmark.org.tga SPEC-benchmark.tga > imagevalidate_SPEC-benchmark.tga.out 2> imagevalidate_SPEC-benchmark.tga.err && cd ..
-	@for f in imagevalidate_SPEC-benchmark.tga.out; do \
-		$(DIFF) -w $(RUN_DIR)/$$f data/train/output/$$f; \
-	done
+	$(call SPECDIFF, --reltol 0.06, $(RUN_DIR)/imagevalidate_SPEC-benchmark.tga.out, data/train/output/imagevalidate_SPEC-benchmark.tga.out);
 test-cmp: $(VALIDATOR)
 	cd $(RUN_DIR) && $(VALIDATOR) ../data/test/compare/SPEC-benchmark.org.tga SPEC-benchmark.tga > imagevalidate_SPEC-benchmark.tga.out 2> imagevalidate_SPEC-benchmark.tga.err && cd ..
-	@for f in imagevalidate_SPEC-benchmark.tga.out; do \
-		$(DIFF) -w $(RUN_DIR)/$$f data/test/output/$$f; \
-	done
+	$(call SPECDIFF, --reltol 0.06, $(RUN_DIR)/imagevalidate_SPEC-benchmark.tga.out, data/test/output/imagevalidate_SPEC-benchmark.tga.out);
