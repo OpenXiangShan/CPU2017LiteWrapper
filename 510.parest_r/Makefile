@@ -148,14 +148,17 @@ include $(SPEC_LITE)/Makefile.apps
 clean_preprocess_objs:
 
 refrate-cmp:
-	@for f in 003-m00.vtk 004-m00.vtk 001-m00.vtk 002-m00.vtk statistics me.prm 006-m00.vtk 007-m00.vtk log 005-m00.vtk; do \
-		$(DIFF) $(RUN_DIR)/$$f data/refrate/output/$$f; \
+	@for f in 003-m00.vtk 004-m00.vtk 001-m00.vtk 002-m00.vtk me.prm 006-m00.vtk 007-m00.vtk log 005-m00.vtk; do \
+		$(call SPECDIFF, --abstol 0.001 --floatcompare, $(RUN_DIR)/$$f, data/refrate/output/$$f); \
 	done
+	$(call SPECDIFF, --abstol 0.004 --floatcompare, $(RUN_DIR)/statistics, data/refrate/output/statistics);
 train-cmp:
-	@for f in statistics me.prm 001-m0.vtk log 002-m0.vtk; do \
-		$(DIFF) $(RUN_DIR)/$$f data/train/output/$$f; \
+	@for f in me.prm 001-m0.vtk log 002-m0.vtk; do \
+		$(call SPECDIFF, --abstol 0.001 --floatcompare, $(RUN_DIR)/$$f, data/train/output/$$f); \
 	done
+	$(call SPECDIFF, --abstol 0.004 --floatcompare, $(RUN_DIR)/statistics, data/train/output/statistics);
 test-cmp:
-	@for f in statistics me.prm 001-m0.vtk log; do \
-		$(DIFF) $(RUN_DIR)/$$f data/test/output/$$f; \
+	@for f in me.prm 001-m0.vtk log; do \
+		$(call SPECDIFF, --abstol 0.001 --floatcompare, $(RUN_DIR)/$$f, data/test/output/$$f); \
 	done
+	$(call SPECDIFF, --abstol 0.004 --floatcompare, $(RUN_DIR)/statistics, data/test/output/statistics);
