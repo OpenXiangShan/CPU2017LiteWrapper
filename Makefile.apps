@@ -224,7 +224,7 @@ $(DATAPREPARE): $(DATAPREPARE_OBJS)
 
 DIFF = diff
 SPECDIFF_FILE =  $(SPEC)/bin/specdiff
-SPECDIFF = cd $(dir $(SPECDIFF_FILE)) && ./specdiff -m -l 10 $(1) $(abspath $(2)) $(abspath $(3))
+SPECDIFF = cd $(dir $(SPECDIFF_FILE)); ./specdiff -m -l 10 $(1) $(abspath $(2)) $(abspath $(3)); cd $${OLDPWD}
 
 # prototype: cmd_template(size)
 define cmd_template
