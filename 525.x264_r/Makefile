@@ -61,16 +61,16 @@ clean_preprocess_objs:
 
 refrate-cmp: $(VALIDATOR)
 	@for f in 1100 200 1249 900 700 800 999 400 600; do \
-		cd $(RUN_DIR); $(VALIDATOR) -avg -diff diff.tga -dumpfile frame_$$f.yuv ../data/test/compare/frame_$$f.org.tga > imagevalidate_frame_$$f.out 2> imagevalidate_frame_$$f.err; cd $${OLDPWD}; \
+		cd $(RUN_DIR) && $(VALIDATOR) -avg -diff diff.tga -dumpfile frame_$$f.yuv ../data/test/compare/frame_$$f.org.tga > imagevalidate_frame_$$f.out 2> imagevalidate_frame_$$f.err && cd $${OLDPWD} && \
 		$(call SPECDIFF, --reltol 0.085, $(RUN_DIR)/imagevalidate_frame_$$f.out, data/refrate/output/imagevalidate_frame_$$f.out); \
 	done
 train-cmp: $(VALIDATOR)
 	@for f in 141 50 100; do \
-		cd $(RUN_DIR); $(VALIDATOR) -avg -diff diff.tga -dumpfile frame_$$f.yuv ../data/train/compare/frame_$$f.org.tga > imagevalidate_frame_$$f.out 2> imagevalidate_frame_$$f.err; cd $${OLDPWD}; \
+		cd $(RUN_DIR) && $(VALIDATOR) -avg -diff diff.tga -dumpfile frame_$$f.yuv ../data/train/compare/frame_$$f.org.tga > imagevalidate_frame_$$f.out 2> imagevalidate_frame_$$f.err && cd $${OLDPWD} && \
 		$(call SPECDIFF, --reltol 0.085, $(RUN_DIR)/imagevalidate_frame_$$f.out, data/train/output/imagevalidate_frame_$$f.out); \
 	done
 test-cmp: $(VALIDATOR)
 	@for f in 50 155 100; do \
-		cd $(RUN_DIR); $(VALIDATOR) -avg -diff diff.tga -dumpfile frame_$$f.yuv ../data/test/compare/frame_$$f.org.tga > imagevalidate_frame_$$f.out 2> imagevalidate_frame_$$f.err; cd $${OLDPWD}; \
+		cd $(RUN_DIR) && $(VALIDATOR) -avg -diff diff.tga -dumpfile frame_$$f.yuv ../data/test/compare/frame_$$f.org.tga > imagevalidate_frame_$$f.out 2> imagevalidate_frame_$$f.err && cd $${OLDPWD} && \
 		$(call SPECDIFF, --reltol 0.085, $(RUN_DIR)/imagevalidate_frame_$$f.out, data/test/output/imagevalidate_frame_$$f.out); \
 	done
