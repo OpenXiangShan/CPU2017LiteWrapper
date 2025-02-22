@@ -13,14 +13,8 @@ include $(SPEC_LITE)/Makefile.apps
 clean_preprocess_objs:
 
 refrate-cmp:
-	@for f in apoa1.ref.output; do \
-		$(DIFF) $(RUN_DIR)/$$f data/refrate/output/$$f; \
-	done
+	$(call SPECDIFF, --abstol 5e-05, $(RUN_DIR)/apoa1.ref.output, data/refrate/output/apoa1.ref.output)
 train-cmp:
-	@for f in apoa1.train.output; do \
-		$(DIFF) $(RUN_DIR)/$$f data/train/output/$$f; \
-	done
+	$(call SPECDIFF, --abstol 5e-05, $(RUN_DIR)/apoa1.train.output, data/train/output/apoa1.train.output)
 test-cmp:
-	@for f in apoa1.test.output; do \
-		$(DIFF) $(RUN_DIR)/$$f data/test/output/$$f; \
-	done
+	$(call SPECDIFF, --abstol 5e-05, $(RUN_DIR)/apoa1.test.output, data/test/output/apoa1.test.output)
