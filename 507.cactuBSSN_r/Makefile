@@ -254,3 +254,16 @@ clean_preprocess_objs:
 
 OBJ_SUFFIX=.o
 $(DST_DIR)/src/$(addsuffix $(OBJ_SUFFIX), $(basename Fortran/cctk.f90)): src/Fortran/cctk.f90 $(addprefix $(DST_DIR)/src/,$(addsuffix $(OBJ_SUFFIX),$(basename Fortran/cctk_ActiveThorns.f90 Fortran/cctk_Banner.f90 Fortran/cctk_Cache.f90 Fortran/cctk_Comm.f90 Fortran/cctk_CommandLine.f90 Fortran/cctk_Complex.f90 Fortran/cctk_Constants.f90 Fortran/cctk_Coord.f90 Fortran/cctk_DebugDefines.f90 Fortran/cctk_Faces.f90 Fortran/cctk_File.f90 Fortran/cctk_Flesh.f90 Fortran/cctk_FortranString1.f90 Fortran/cctk_FortranWrappers.f90 Fortran/cctk_GHExtensions.f90 Fortran/cctk_GNU.f90 Fortran/cctk_Groups.f90 Fortran/cctk_GroupsOnGH.f90 Fortran/cctk_IO.f90 Fortran/cctk_IOMethods.f90 Fortran/cctk_Interp.f90 Fortran/cctk_Main.f90 Fortran/cctk_Malloc1.f90 Fortran/cctk_Math.f90 Fortran/cctk_MemAlloc.f90 Fortran/cctk_Misc.f90 Fortran/cctk_ParamCheck.f90 Fortran/cctk_Parameter.f90 Fortran/cctk_Reduction.f90 Fortran/cctk_Schedule.f90 Fortran/cctk_Sync.f90 Fortran/cctk_Termination.f90 Fortran/cctk_Timers.f90 Fortran/cctk_Types.f90 Fortran/cctk_Version.f90 Fortran/cctk_WarnLevel.f90 Fortran/util_Table.f90) ))
+
+refrate-cmp:
+	$(call SPECDIFF, --abstol 5e-13 --floatcompare, $(RUN_DIR)/gxx.xl, data/refrate/output/gxx.xl)
+	$(call SPECDIFF, --abstol 5e-13 --floatcompare, $(RUN_DIR)/gxy.xl, data/refrate/output/gxy.xl)
+	$(call SPECDIFF, --floatcompare, $(RUN_DIR)/spec_ref.out, data/refrate/output/spec_ref.out)
+train-cmp:
+	$(call SPECDIFF, --abstol 5e-13 --floatcompare, $(RUN_DIR)/gxx.xl, data/train/output/gxx.xl)
+	$(call SPECDIFF, --abstol 5e-13 --floatcompare, $(RUN_DIR)/gxy.xl, data/train/output/gxy.xl)
+	$(call SPECDIFF, --floatcompare, $(RUN_DIR)/spec_train.out, data/train/output/spec_train.out)
+test-cmp:
+	$(call SPECDIFF, --abstol 5e-13 --floatcompare, $(RUN_DIR)/gxx.xl, data/test/output/gxx.xl)
+	$(call SPECDIFF, --abstol 5e-13 --floatcompare, $(RUN_DIR)/gxy.xl, data/test/output/gxy.xl)
+	$(call SPECDIFF, --floatcompare, $(RUN_DIR)/spec_test.out, data/test/output/spec_test.out)

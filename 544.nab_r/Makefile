@@ -11,3 +11,16 @@ SPEC_LDFLAGS += -lm
 include $(SPEC_LITE)/Makefile.apps
 .PHONY: clean_preprocess_objs
 clean_preprocess_objs:
+
+refrate-cmp:
+	@for f in 1am0.out; do \
+		$(call SPECDIFF, --reltol 0.01 --skipreltol 2, $(RUN_DIR)/$$f, data/refrate/output/$$f); \
+	done
+train-cmp:
+	@for f in gcn4dna.out aminos.out; do \
+		$(call SPECDIFF, --reltol 0.01 --skipreltol 2, $(RUN_DIR)/$$f, data/train/output/$$f); \
+	done
+test-cmp:
+	@for f in hkrdenq.out; do \
+		$(call SPECDIFF, --reltol 0.01 --skipreltol 2, $(RUN_DIR)/$$f, data/test/output/$$f); \
+	done

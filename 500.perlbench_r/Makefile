@@ -20,7 +20,20 @@ SRCS = $(addprefix src/, av.c caretx.c deb.c doio.c doop.c dump.c globals.c gv.c
 SPEC_CFLAGS += -DSPEC -DNDEBUG -DPERL_CORE -Isrc/ -Isrc/dist/IO -Isrc/cpan/Time-HiRes -Isrc/cpan/HTML-Parser -Isrc/ext/re -Isrc/specrand -DDOUBLE_SLASHES_SPECIAL=0 -DSPEC_AUTO_SUPPRESS_OPENMP -D_LARGE_FILES -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -DSPEC_LINUX_X64 -D_DEFAULT_SOURCE -DSPEC_LP64
 SPEC_CXXFLAGS +=
 SPEC_FFLAGS +=
-SPEC_LDFLAGS += -z muldefs -DSPEC_LINUX_X64 -D_DEFAULT_SOURCE -lm
+SPEC_LDFLAGS += -z muldefs -lm
 include $(SPEC_LITE)/Makefile.apps
 .PHONY: clean_preprocess_objs
 clean_preprocess_objs:
+
+refrate-cmp:
+	@for f in checkspam.2500.5.25.11.150.1.1.1.1.out splitmail.6400.12.26.16.100.0.out diffmail.4.800.10.17.19.300.out; do \
+		$(call SPECDIFF, --floatcompare --nonansupport, $(RUN_DIR)/$$f, data/refrate/output/$$f); \
+	done
+train-cmp:
+	@for f in splitmail.535.13.25.24.1091.1.out validate diffmail.2.550.15.24.23.100.out suns.out scrabbl.out perfect.b.3.out; do \
+		$(call SPECDIFF, --floatcompare --nonansupport, $(RUN_DIR)/$$f, data/train/output/$$f); \
+	done
+test-cmp:
+	@for f in makerand.out test.out; do \
+		$(call SPECDIFF, --floatcompare --nonansupport, $(RUN_DIR)/$$f, data/test/output/$$f); \
+	done

@@ -1,0 +1,1 @@
+$APP --dumpyuv 50 --frames 142 -o BuckBunny_New.264 BuckBunny.yuv 1280x720 > run.log 2> run.err

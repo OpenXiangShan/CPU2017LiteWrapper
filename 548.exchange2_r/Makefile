@@ -10,3 +10,16 @@ include $(SPEC_LITE)/Makefile.apps
 clean_preprocess_objs:
 	@rm -rf $(PREPROCESS_OBJS)
 	@find src -name "*.mod" -exec rm {} \;
+
+refrate-cmp:
+	@for f in s.txt; do \
+		$(DIFF) $(RUN_DIR)/$$f data/refrate/output/$$f; \
+	done
+train-cmp:
+	@for f in s.txt; do \
+		$(DIFF) $(RUN_DIR)/$$f data/train/output/$$f; \
+	done
+test-cmp:
+	@for f in s.txt; do \
+		$(DIFF) $(RUN_DIR)/$$f data/test/output/$$f; \
+	done

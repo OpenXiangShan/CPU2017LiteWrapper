@@ -52,7 +52,7 @@ mod_nesting.F90 esmf_roms.F90 master.F90 \
 )
 SPEC_CFLAGS +=
 SPEC_CXXFLAGS +=
-SPEC_FFLAGS += -fallow-argument-mismatch -mabi=lp64d -I$(abspath ./src)
+SPEC_FFLAGS += -fallow-argument-mismatch -I$(abspath ./src)
 SPECCPPFLAGS += -DSPEC -DNDEBUG -w -m literal-single.pm -m c-comment.pm -I$(abspath src) -DBENCHMARK -DNestedGrids=1 -DNO_GETTIMEOFDAY -DSPEC_AUTO_SUPPRESS_OPENMP -DSPEC_LP64
 
 LD_FORTRAN = 1
@@ -180,3 +180,16 @@ $(DST_DIR)/src/$(addsuffix $(OBJ_SUFFIX), wvelocity.fppized): src/wvelocity.fppi
 $(DST_DIR)/src/$(addsuffix $(OBJ_SUFFIX), zetabc.fppized): src/zetabc.fppized.f90 $(addprefix $(DST_DIR)/src/,$(addsuffix $(OBJ_SUFFIX),$(basename ) mod_boundary.fppized mod_grid.fppized mod_ocean.fppized mod_param.fppized mod_scalars.fppized mod_stepping.fppized))
 
 
+
+refrate-cmp:
+	@for f in ocean_benchmark2.log; do \
+		$(call SPECDIFF, --abstol 1e-07 --reltol 1e-07, $(RUN_DIR)/$$f,  data/refrate/output/$$f); \
+	done
+train-cmp:
+	@for f in ocean_benchmark1.log; do \
+		$(call SPECDIFF, --abstol 1e-07 --reltol 1e-07, $(RUN_DIR)/$$f,  data/train/output/$$f); \
+	done
+test-cmp:
+	@for f in ocean_benchmark0.log; do \
+		$(call SPECDIFF, --abstol 1e-07 --reltol 1e-07, $(RUN_DIR)/$$f,  data/test/output/$$f); \
+	done

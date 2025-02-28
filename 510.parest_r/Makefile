@@ -146,3 +146,19 @@ LD_CXX = 1
 include $(SPEC_LITE)/Makefile.apps
 .PHONY: clean_preprocess_objs
 clean_preprocess_objs:
+
+refrate-cmp:
+	@for f in 003-m00.vtk 004-m00.vtk 001-m00.vtk 002-m00.vtk me.prm 006-m00.vtk 007-m00.vtk log 005-m00.vtk; do \
+		$(call SPECDIFF, --abstol 0.001 --floatcompare, $(RUN_DIR)/$$f, data/refrate/output/$$f); \
+	done
+	$(call SPECDIFF, --abstol 0.004 --floatcompare, $(RUN_DIR)/statistics, data/refrate/output/statistics);
+train-cmp:
+	@for f in me.prm 001-m0.vtk log 002-m0.vtk; do \
+		$(call SPECDIFF, --abstol 0.001 --floatcompare, $(RUN_DIR)/$$f, data/train/output/$$f); \
+	done
+	$(call SPECDIFF, --abstol 0.004 --floatcompare, $(RUN_DIR)/statistics, data/train/output/statistics);
+test-cmp:
+	@for f in me.prm 001-m0.vtk log; do \
+		$(call SPECDIFF, --abstol 0.001 --floatcompare, $(RUN_DIR)/$$f, data/test/output/$$f); \
+	done
+	$(call SPECDIFF, --abstol 0.004 --floatcompare, $(RUN_DIR)/statistics, data/test/output/statistics);

@@ -81,3 +81,16 @@ LD_CXX = 1
 include $(SPEC_LITE)/Makefile.apps
 .PHONY: clean_preprocess_objs
 clean_preprocess_objs:
+
+refrate-cmp:
+	@for f in General-0.sca; do \
+		$(call SPECDIFF, --abstol 1e-06 --reltol 1e-05, $(RUN_DIR)/$$f, data/refrate/output/$$f); \
+	done
+train-cmp:
+	@for f in General-0.sca; do \
+		$(call SPECDIFF, --abstol 1e-06 --reltol 1e-05, $(RUN_DIR)/$$f, data/train/output/$$f); \
+	done
+test-cmp:
+	@for f in General-0.sca; do \
+		$(call SPECDIFF, --abstol 1e-06 --reltol 1e-05, $(RUN_DIR)/$$f, data/test/output/$$f); \
+	done

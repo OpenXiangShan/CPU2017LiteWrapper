@@ -1,0 +1,1 @@
+$APP --input apoa1.input --iterations 7 --output apoa1.train.output > namd.out 2> namd.err

@@ -10,3 +10,16 @@ LD_CXX = 1
 include $(SPEC_LITE)/Makefile.apps
 .PHONY: clean_preprocess_objs
 clean_preprocess_objs:
+
+refrate-cmp:
+	@for f in ref.out; do \
+		$(call SPECDIFF, --obiwan, $(RUN_DIR)/$$f, data/refrate/output/$$f); \
+	done
+train-cmp:
+	@for f in train.out; do \
+		$(call SPECDIFF, --obiwan, $(RUN_DIR)/$$f, data/train/output/$$f); \
+	done
+test-cmp:
+	@for f in test.out; do \
+		$(call SPECDIFF, --obiwan, $(RUN_DIR)/$$f, data/test/output/$$f); \
+	done

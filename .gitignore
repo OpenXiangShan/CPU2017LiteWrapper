@@ -1,6 +1,11 @@
 **/src
-**/build
+**/build*
+**/data
+**/host
+**/run*/
 **/*_s
 scripts/*
 !scripts/collect.sh
+!scripts/run-template.sh
+!scripts/gen_diff.py
 **/logs

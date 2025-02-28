@@ -8,3 +8,16 @@ SPEC_FFLAGS +=
 include $(SPEC_LITE)/Makefile.apps
 .PHONY: clean_preprocess_objs
 clean_preprocess_objs:
+
+refrate-cmp:
+	@for f in mcf.out inp.out; do \
+		$(DIFF) $(RUN_DIR)/$$f data/refrate/output/$$f; \
+	done
+train-cmp:
+	@for f in mcf.out inp.out; do \
+		$(DIFF) $(RUN_DIR)/$$f data/train/output/$$f; \
+	done
+test-cmp:
+	@for f in mcf.out inp.out; do \
+		$(DIFF) $(RUN_DIR)/$$f data/test/output/$$f; \
+	done
