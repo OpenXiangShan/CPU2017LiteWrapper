@@ -33,5 +33,5 @@ if [ "$ARCH" != `uname -m` ]; then
     LOADER="qemu-$ARCH"
   fi
 fi
-APP="/usr/bin/time -a -o $TIME_LOG $LOADER $WORK_DIR/build$TAG/$FULLNAME" sh $RUN_SH
+APP="$LOADER $WORK_DIR/build$TAG/$FULLNAME" /usr/bin/time -a -o $TIME_LOG sh $RUN_SH
 cat $TIME_LOG
