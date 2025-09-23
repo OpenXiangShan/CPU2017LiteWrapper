@@ -4,7 +4,7 @@
 
 - set SPEC2017 path in env vars
 ``` Makefile
-export SPEC=/spec2017_path
+export SPEC=/path/to/CPU2017
 
 ```
 
@@ -20,15 +20,27 @@ cd $SPEC_LITE
 make copy_allr
 ```
 
-- compile binarys
+- copy data
+```shell
+make copy_data_all -j `nproc`
 ```
+
+- compile binaries
+```shell
 export ARCH=riscv64
 export CROSS_COMPILE=riscv64-unknown-linux-gnu-
-make build_allr -j 70
+make build_allr -j `nproc`
 ```
-- collect result
+- collect result (optional)
 ```
 bash scripts/collect.sh
+```
+
+- Run on localhost (optional)
+```shell
+make run-all-refrate # Don't use -j `nproc` here for single thread benchmarks
+make report-int-refrate | tail -n 10 | ./scripts/score.py
+make report-fp-refrate | tail -n 13 | ./scripts/score.py
 ```
 
 # Note for GCC 15
