@@ -55,7 +55,8 @@ SPEC_CFLAGS += -Isrc/ldecod_src/inc -Isrc/x264_src -Isrc/x264_src/extras -Isrc/x
 SPEC_CXXFLAGS +=
 SPEC_FFLAGS +=
 SPEC_LDFLAGS += -lm
-include $(SPEC_LITE)/Makefile.apps
+include ../Makefile.apps
+include ../Makefile.run
 .PHONY: clean_preprocess_objs
 clean_preprocess_objs:
 

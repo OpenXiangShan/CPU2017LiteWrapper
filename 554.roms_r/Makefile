@@ -56,7 +56,8 @@ SPEC_FFLAGS += -fallow-argument-mismatch -I$(abspath ./src)
 SPECCPPFLAGS += -DSPEC -DNDEBUG -w -m literal-single.pm -m c-comment.pm -I$(abspath src) -DBENCHMARK -DNestedGrids=1 -DNO_GETTIMEOFDAY -DSPEC_AUTO_SUPPRESS_OPENMP -DSPEC_LP64
 
 LD_FORTRAN = 1
-include $(SPEC_LITE)/Makefile.apps
+include ../Makefile.apps
+include ../Makefile.run
 .PHONY: clean_preprocess_objs
 clean_preprocess_objs:
 	@rm -rf $(PREPROCESS_OBJS)

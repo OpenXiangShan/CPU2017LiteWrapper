@@ -273,12 +273,13 @@ XercesTreeWalker.cpp XercesWrapperHelper.cpp XercesWrapperNavigator.cpp \
 XercesWrapperNavigatorAllocator.cpp XercesWrapperToXalanNodeMap.cpp \
 XercesXPath.cpp YearDatatypeValidator.cpp YearMonthDatatypeValidator.cpp \
 )
-SPEC_CFLAGS += -DSPEC -DNDEBUG -DAPP_NO_THREADS -DXALAN_INMEM_MSG_LOADER -Isrc -Isrc/xercesc -Isrc/xercesc/dom -Isrc/xercesc/dom/impl -Isrc/xercesc/sax -Isrc/xercesc/util/MsgLoaders/InMemory -Isrc/xercesc/util/Transcoders/Iconv -Isrc/xalanc/include -DPROJ_XMLPARSER -DPROJ_XMLUTIL -DPROJ_PARSERS -DPROJ_SAX4C -DPROJ_SAX2 -DPROJ_DOM -DPROJ_VALIDATORS -DXML_USE_INMEM_MESSAGELOADER -DSPEC_AUTO_SUPPRESS_OPENMP    -DSPEC_LINUX     -DSPEC_LP64 -DAPP_NO_THREADS -DXALAN_INMEM_MSG_LOADER -Isrc -Isrc/xercesc -Isrc/xercesc/dom -Isrc/xercesc/dom/impl -Isrc/xercesc/sax -Isrc/xercesc/util/MsgLoaders/InMemory -Isrc/xercesc/util/Transcoders/Iconv -Isrc/xalanc/include -DPROJ_XMLPARSER -DPROJ_XMLUTIL -DPROJ_PARSERS -DPROJ_SAX4C -DPROJ_SAX2 -DPROJ_DOM -DPROJ_VALIDATORS -DXML_USE_INMEM_MESSAGELOADER -DSPEC_AUTO_SUPPRESS_OPENMP
+SPEC_CFLAGS += -DSPEC -DNDEBUG -DAPP_NO_THREADS -DXALAN_INMEM_MSG_LOADER -Isrc -Isrc/xercesc -Isrc/xercesc/dom -Isrc/xercesc/dom/impl -Isrc/xercesc/sax -Isrc/xercesc/util/MsgLoaders/InMemory -Isrc/xercesc/util/Transcoders/Iconv -Isrc/xalanc/include -DPROJ_XMLPARSER -DPROJ_XMLUTIL -DPROJ_PARSERS -DPROJ_SAX4C -DPROJ_SAX2 -DPROJ_DOM -DPROJ_VALIDATORS -DXML_USE_INMEM_MESSAGELOADER -DSPEC_AUTO_SUPPRESS_OPENMP    -DSPEC_LINUX     -DSPEC_LP64 -DAPP_NO_THREADS -DXALAN_INMEM_MSG_LOADER -Isrc -Isrc/xercesc -Isrc/xercesc/dom -Isrc/xercesc/dom/impl -Isrc/xercesc/sax -Isrc/xercesc/util/MsgLoaders/InMemory -Isrc/xercesc/util/Transcoders/Iconv -Isrc/xalanc/include -DPROJ_XMLPARSER -DPROJ_XMLUTIL -DPROJ_PARSERS -DPROJ_SAX4C -DPROJ_SAX2 -DPROJ_DOM -DPROJ_VALIDATORS -DXML_USE_INMEM_MESSAGELOADER -DSPEC_AUTO_SUPPRESS_OPENMP -Wno-template-body
 SPEC_CXXFLAGS +=
 SPEC_FFLAGS +=
 SPEC_LDFLAGS += -fpermissive -std=c++03 -DSPEC_LINUX
 LD_CXX = 1
-include $(SPEC_LITE)/Makefile.apps
+include ../Makefile.apps
+include ../Makefile.run
 .PHONY: clean_preprocess_objs
 clean_preprocess_objs:
 

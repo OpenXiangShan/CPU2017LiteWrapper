@@ -5,7 +5,8 @@ SPEC_CXXFLAGS +=
 SPEC_FFLAGS +=
 SPECCPPFLAGS += -DSPEC -DNDEBUG -DSPEC_AUTO_SUPPRESS_OPENMP -DSPEC_LP64
 LD_FORTRAN = 1
-include $(SPEC_LITE)/Makefile.apps
+include ../Makefile.apps
+include ../Makefile.run
 .PHONY: clean_preprocess_objs
 clean_preprocess_objs:
 	@rm -rf $(PREPROCESS_OBJS)

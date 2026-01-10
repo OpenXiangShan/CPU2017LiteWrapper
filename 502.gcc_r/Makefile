@@ -81,7 +81,8 @@ SPEC_CFLAGS += -DSPEC -DNDEBUG -Isrc -Isrc/include -Isrc/spec_qsort -DSPEC_502 -
 SPEC_CXXFLAGS +=
 SPEC_FFLAGS +=
 SPEC_LDFLAGS += -z muldefs
-include $(SPEC_LITE)/Makefile.apps
+include ../Makefile.apps
+include ../Makefile.run
 .PHONY: clean_preprocess_objs
 clean_preprocess_objs:
 

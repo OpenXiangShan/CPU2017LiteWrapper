@@ -46,7 +46,8 @@ SPEC_CFLAGS += -DSPEC -DNDEBUG -DSPEC_AUTO_BYTEORDER=0x12345678 -DHAVE_CONFIG_H=
 SPEC_CXXFLAGS +=
 SPEC_FFLAGS +=
 LIBS +=
-include $(SPEC_LITE)/Makefile.apps
+include ../Makefile.apps
+include ../Makefile.run
 .PHONY: clean_preprocess_objs
 clean_preprocess_objs:
 

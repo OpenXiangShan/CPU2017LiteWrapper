@@ -246,7 +246,8 @@ SPEC_CFLAGS += -DSPEC -DNDEBUG -DSPEC_AUTO_SUPPRESS_OPENMP -Isrc/include -DCCODE
 SPEC_CXXFLAGS +=
 SPEC_FFLAGS += -I$(abspath src/include) -DCCODE
 LD_CXX = 1
-include $(SPEC_LITE)/Makefile.apps
+include ../Makefile.apps
+include ../Makefile.run
 .PHONY: clean_preprocess_objs
 clean_preprocess_objs:
 	@rm -rf $(PREPROCESS_OBJS)

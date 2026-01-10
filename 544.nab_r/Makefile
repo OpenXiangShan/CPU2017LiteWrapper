@@ -8,7 +8,8 @@ SPEC_CFLAGS += -Isrc/specrand -Isrc/regex-alpha -DNDEBUG -DNOPERFLIB -DNOREDUCE 
 SPEC_CXXFLAGS +=
 SPEC_FFLAGS +=
 SPEC_LDFLAGS += -lm
-include $(SPEC_LITE)/Makefile.apps
+include ../Makefile.apps
+include ../Makefile.run
 .PHONY: clean_preprocess_objs
 clean_preprocess_objs:
 

@@ -140,7 +140,8 @@ SPEC_CXXFLAGS +=
 SPEC_FFLAGS += -I. -Iinclude -Inetcdf/include -Inetcdf -ffree-line-length-none
 SPECCPPFLAGS += -DSPEC -DNDEBUG -DNO_SHR_VMATH -DCO2A -DPERGRO -DPLON=144 -DPLAT=96 -DPLEV=26 -DPCNST=3 -DPCOLS=4 -DPTRM=1 -DPTRN=1 -DPTRK=1 -DSTAGGERED -D_NETCDF -DNO_R16 -I. -Iinclude -Inetcdf/include -Inetcdf -DSPEC_AUTO_SUPPRESS_OPENMP -w -DHIDE_MPI -D_MPISERIAL -DNO_MPI2 -DSPEC_CASE_FLAG -DSPEC_LP64
 LD_FORTRAN = 1
-include $(SPEC_LITE)/Makefile.apps
+include ../Makefile.apps
+include ../Makefile.run
 
 .PHONY: clean_preprocess_objs
 clean_preprocess_objs:

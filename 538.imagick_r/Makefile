@@ -37,7 +37,8 @@ SPEC_CFLAGS += -Isrc -DSPEC_AUTO_SUPPRESS_OPENMP
 SPEC_CXXFLAGS +=
 SPEC_FFLAGS +=
 SPEC_LDFLAGS += -lm
-include $(SPEC_LITE)/Makefile.apps
+include ../Makefile.apps
+include ../Makefile.run
 .PHONY: clean_preprocess_objs
 clean_preprocess_objs:
 

@@ -232,7 +232,8 @@ SPECCPPFLAGS += -DSPEC -DNDEBUG -DSTUBMPI -DSPEC_AUTO_SUPPRESS_OPENMP -w -m lite
 LD_FORTRAN = 1
 SPEC_LDFLAGS = -fconvert=big-endian
 
-include $(SPEC_LITE)/Makefile.apps
+include ../Makefile.apps
+include ../Makefile.run
 .PHONY: clean_preprocess_objs
 clean_preprocess_objs:
 	@rm -rf $(PREPROCESS_OBJS)

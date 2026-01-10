@@ -4,7 +4,7 @@ SPEC ?=
 WORK_DIR = .
 DST_DIR = $(WORK_DIR)/build$(TAG)
 HOST_DIR = $(WORK_DIR)/host
-RUN_DIR = $(WORK_DIR)/run$(TAG)
+RUN_DIR = $(WORK_DIR)/run$(RUN_TAG)
 $(shell mkdir -p $(DST_DIR))
 
 ### Files to be linked: object files (`.o`) and libraries (`.a`)
@@ -221,22 +221,7 @@ $(DATAPREPARE): $(DATAPREPARE_OBJS)
 	@echo + LD "->" $(DATAPREPARE_REL)
 	@$(HOST_LD) -o $(abspath $@) $(DATAPREPARE_OBJS) $(HOST_LDFLAGS)
 
-## 5. Running Rules
-
-DIFF = diff
-SPECDIFF_FILE =  $(SPEC)/bin/specdiff
-SPECDIFF = cd $(dir $(SPECDIFF_FILE)) && ./specdiff -m -l 10 $(1) $(abspath $(2)) $(abspath $(3)) && cd $${OLDPWD}
-
-# prototype: cmd_template(size)
-define cmd_template
-run-$(1): $$(APP)
-	@sh $(SPEC_LITE)/scripts/run-template.sh run-$(1).sh $(abspath $(RUN_DIR)) $(LOADER)
-
-endef
-
-$(eval $(foreach size,test train refrate,$(call cmd_template,$(size))))
-
-## 6. Miscellaneous
+## 5. Miscellaneous
 
 .PHONY: clean-src
 clean-src:

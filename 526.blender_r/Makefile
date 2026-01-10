@@ -1017,7 +1017,8 @@ SPEC_CFLAGS += -Isrc/specrand -Isrc/blender/extern/binreloc/include -Isrc/blende
 SPEC_CXXFLAGS +=
 SPEC_FFLAGS +=
 LD_CXX = 1
-include $(SPEC_LITE)/Makefile.apps
+include ../Makefile.apps
+include ../Makefile.run
 .PHONY: clean_preprocess_objs
 clean_preprocess_objs:
 

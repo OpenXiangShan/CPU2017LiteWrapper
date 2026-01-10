@@ -10,7 +10,8 @@ SPEC_FFLAGS += -I$(abspath src) -DSPEC_AUTO_SUPPRESS_OPENMP
 SPECCPPFLAGS += -DSPEC -DNDEBUG -DSPEC_AUTO_SUPPRESS_OPENMP -DSPEC_LP64
 LD_FORTRAN = 1
 
-include $(SPEC_LITE)/Makefile.apps
+include ../Makefile.apps
+include ../Makefile.run
 
 OBJ_SUFFIX=.o
 $(DST_DIR)/$(addsuffix $(OBJ_SUFFIX), src/MPI_dummy.fppized): src/MPI_dummy.fppized.f90 $(addprefix $(DST_DIR)/,$(addsuffix $(OBJ_SUFFIX),$(basename src/parameter.f90) ))
