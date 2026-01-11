@@ -137,7 +137,10 @@ netcdf/typeSizes.f90 netcdf/netcdf.f90 spec_qsort/spec_qsort.c)
 
 SPEC_CFLAGS += -DSPEC -DNDEBUG  -DNO_SHR_VMATH -DCO2A -DPERGRO -DPLON=144 -DPLAT=96 -DPLEV=26 -DPCNST=3 -DPCOLS=4 -DPTRM=1 -DPTRN=1 -DPTRK=1 -DSTAGGERED -D_NETCDF -DNO_R16 -Isrc -Isrc/include -Isrc/netcdf/include -DSPEC_AUTO_SUPPRESS_OPENMP -DSPEC_AUTO_BYTEORDER=0x12345678 -DSPEC_CASE_FLAG -DSPEC_LP64
 SPEC_CXXFLAGS +=
-SPEC_FFLAGS += -I. -Iinclude -Inetcdf/include -Inetcdf -ffree-line-length-none
+SPEC_FFLAGS += -I. -Iinclude -Inetcdf/include -Inetcdf
+ifeq (,$(findstring flang, $(FC)))
+SPEC_FFLAGS += -ffree-line-length-none
+endif
 SPECCPPFLAGS += -DSPEC -DNDEBUG -DNO_SHR_VMATH -DCO2A -DPERGRO -DPLON=144 -DPLAT=96 -DPLEV=26 -DPCNST=3 -DPCOLS=4 -DPTRM=1 -DPTRN=1 -DPTRK=1 -DSTAGGERED -D_NETCDF -DNO_R16 -I. -Iinclude -Inetcdf/include -Inetcdf -DSPEC_AUTO_SUPPRESS_OPENMP -w -DHIDE_MPI -D_MPISERIAL -DNO_MPI2 -DSPEC_CASE_FLAG -DSPEC_LP64
 LD_FORTRAN = 1
 include ../Makefile.apps

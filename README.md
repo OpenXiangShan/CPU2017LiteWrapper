@@ -93,5 +93,9 @@ index 319edec..4c2bf8a 100644
  SPEC_LDFLAGS += -fpermissive -std=c++03 -DSPEC_LINUX
 ```
 
+# Note for LLVM
+
+You may also need to set `ulimit -s unlimited` before running LLVM-compiled binaries to avoid stack overflow.
+
 # Reference
 - https://github.com/OpenXiangShan/CPU2006LiteWrapper

@@ -3,7 +3,9 @@ SRCS = $(addprefix src/,block_solver.F flow_lam.F flux_lam.F jacobian_lam.F shel
 fill1.F fill2.F)
 SPEC_CFLAGS +=
 SPEC_CXXFLAGS +=
+ifeq (,$(findstring flang, $(FC)))
 SPEC_FFLAGS += -fallow-argument-mismatch
+endif
 SPECCPPFLAGS += -DSPEC -DNDEBUG -w -DSPEC_AUTO_SUPPRESS_OPENMP -DSPEC_LP64
 LD_FORTRAN = 1
 include ../Makefile.apps
