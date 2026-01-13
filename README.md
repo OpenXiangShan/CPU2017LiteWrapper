@@ -42,6 +42,35 @@ make run-all-refrate # Don't use -j `nproc` here for single thread benchmarks
 make report-int-refrate | tail -n 10 | ./scripts/score.py
 make report-fp-refrate | tail -n 13 | ./scripts/score.py
 ```
+You can also specify `VALIDATE=0` and `REPORT=0` to disable validation and report generation to speed up the running process,
+this relaxes the need of `SPEC` env var at runtime:
+
+```shell
+make ARCH=riscv64 VALIDATE=0 REPORT=0 run-all-test
+```
+
+When running on a real hardware, sometimes you may want to know the performance counter of the binaries, you can specify `PROFILER` argument to run the compiled binaries with different profiler, such as `perf`:
+
+```shell
+make ARCH=riscv64 run-int-test PROFILER="perf stat -e cycles,instructions,branch-misses,cache-misses --append -o ../../perf.log"
+```
+
+When you need to compile different binaries with different architecture or flags, you can specify `TAG` argument to distinguish the compiled binaries, it will use `build$(TAG)` as the build folder name:
+
+```shell
+make ARCH=x86_64 build-all -j `nproc`
+make ARCH=x86_64 run-int-test
+make ARCH=riscv64 TAG=riscv64 build-all -j `nproc`
+make ARCH=riscv64 TAG=riscv64 run-int-test
+```
+
+When you need to run the multiple compiled binaries on a shared storage (e.g. NFS) at the same time, you can specify `RUN_TAG` argument to distinguish the run folders, it will use `run$(RUN_TAG)` as the run folder name:
+
+```shell
+make ARCH=riscv64 RUN_TAG=run1 run-int-test
+make ARCH=riscv64 RUN_TAG=run2 run-int-test
+```
+
 
 # Note for GCC 15
 
@@ -63,6 +92,10 @@ index 319edec..4c2bf8a 100644
  SPEC_FFLAGS +=
  SPEC_LDFLAGS += -fpermissive -std=c++03 -DSPEC_LINUX
 ```
+
+# Note for LLVM
+
+You may also need to set `ulimit -s unlimited` before running LLVM-compiled binaries to avoid stack overflow.
 
 # Reference
 - https://github.com/OpenXiangShan/CPU2006LiteWrapper

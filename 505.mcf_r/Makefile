@@ -5,7 +5,8 @@ pbla.c pflowup.c psimplex.c pbeampp.c spec_qsort/spec_qsort.c \
 SPEC_CFLAGS += -DSPEC -DNDEBUG -Isrc/spec_qsort -DSPEC_AUTO_SUPPRESS_OPENMP -DSPEC_LP64
 SPEC_CXXFLAGS +=
 SPEC_FFLAGS +=
-include $(SPEC_LITE)/Makefile.apps
+include ../Makefile.apps
+include ../Makefile.run
 .PHONY: clean_preprocess_objs
 clean_preprocess_objs:
 

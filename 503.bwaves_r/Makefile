@@ -3,10 +3,13 @@ SRCS = $(addprefix src/,block_solver.F flow_lam.F flux_lam.F jacobian_lam.F shel
 fill1.F fill2.F)
 SPEC_CFLAGS +=
 SPEC_CXXFLAGS +=
+ifeq (,$(findstring flang, $(FC)))
 SPEC_FFLAGS += -fallow-argument-mismatch
+endif
 SPECCPPFLAGS += -DSPEC -DNDEBUG -w -DSPEC_AUTO_SUPPRESS_OPENMP -DSPEC_LP64
 LD_FORTRAN = 1
-include $(SPEC_LITE)/Makefile.apps
+include ../Makefile.apps
+include ../Makefile.run
 .PHONY: clean_preprocess_objs
 clean_preprocess_objs:
 

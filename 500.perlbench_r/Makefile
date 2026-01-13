@@ -21,7 +21,8 @@ SPEC_CFLAGS += -DSPEC -DNDEBUG -DPERL_CORE -Isrc/ -Isrc/dist/IO -Isrc/cpan/Time-
 SPEC_CXXFLAGS +=
 SPEC_FFLAGS +=
 SPEC_LDFLAGS += -z muldefs -lm
-include $(SPEC_LITE)/Makefile.apps
+include ../Makefile.apps
+include ../Makefile.run
 .PHONY: clean_preprocess_objs
 clean_preprocess_objs:
 

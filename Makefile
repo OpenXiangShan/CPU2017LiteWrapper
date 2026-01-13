@@ -3,12 +3,11 @@ SPECFPSPEED=603.bwaves_s 607.cactuBSSN_s 619.lbm_s 621.wrf_s 627.cam4_s 628.pop2
 SPECINTRATE=500.perlbench_r 502.gcc_r 505.mcf_r 520.omnetpp_r 523.xalancbmk_r 525.x264_r 531.deepsjeng_r 541.leela_r 548.exchange2_r 557.xz_r
 SPECINTSPEED=600.perlbench_s 602.gcc_s 605.mcf_s 620.omnetpp_s 623.xalancbmk_s 625.x264_s 631.deepsjeng_s 641.leela_s 648.exchange2_s 657.xz_s
 
+VALIDATE ?= 1
+REPORT   ?= 1
+
 ARCH ?= $(shell uname -m)
 export ARCH
-
-ifeq ($(SPEC),)
-$(error ERROR: enviroment variable SPEC is not defined)
-endif
 
 SPEC_LITE ?= $(CURDIR)
 export SPEC_LITE
@@ -99,39 +98,46 @@ clean_logs_allr: clean_logs_fpr clean_logs_intr
 
 # prototype: cmd_template(size)
 define cmd_template
-run-int-$(1): $(foreach t,$(SPECINTRATE),run-$t-$(1))
+run-int-$(1): $(foreach t,$(SPECINTRATE),runeach-$t-$(1))
+ifeq ($(REPORT),1)
 	echo "\n\n\n"
 	$(MAKE) report-int-$(1)
+endif
 
 validate-int-$(1):
 	for t in $$(SPECINTRATE); do $(MAKE) -s -C $$$$t $(1)-cmp; done
 
-run-fp-$(1): $(foreach t,$(SPECFPRATE),run-$t-$(1))
+run-fp-$(1): $(foreach t,$(SPECFPRATE),runeach-$t-$(1))
+ifeq ($(REPORT),1)
 	echo "\n\n\n"
 	$(MAKE) report-fp-$(1)
+endif
 
-run-all-$(1): $(foreach t,$(SPECINTRATE) $(SPECFPRATE),run-$t-$(1))
+run-all-$(1): $(foreach t,$(SPECINTRATE) $(SPECFPRATE),runeach-$t-$(1))
+ifeq ($(REPORT),1)
 	echo "\n\n\n"
 	$(MAKE) report-int-$(1)
 	$(MAKE) report-fp-$(1)
+endif
 
 validate-fp-$(1):
 	for t in $$(SPECFPRATE); do $(MAKE) -s -C $$$$t $(1)-cmp; done
 
-run-%-$(1):
+runeach-%-$(1):
 	echo "Running $(1) on $$*"
-	@$(MAKE) -s -C $$* run-$(1) > $$*/logs/run-$(1).log
+	@$(MAKE) -s -C $$* run TYPE=$(1) > $$*/logs/run-$(1).log
+ifeq ($(VALIDATE),1)
+	$(MAKE) validate-$$*-$(1)
+endif
 
 validate-%-$(1):
 	@$(MAKE) -s -C $$* $(1)-cmp
 
 report-int-$(1):
-	for t in $$(SPECINTRATE); do cat $$$$t/logs/run-$(1).sh.timelog; echo ""; done
-	for t in $$(SPECINTRATE); do cat $$$$t/logs/run-$(1).sh.timelog | grep "# elapsed in second" | sed -e "s/#.*/\t$$$$t/"; done
+	@python scripts/report.py --input $(1) --spec int --run-tag "$(RUN_TAG)"
 
 report-fp-$(1):
-	for t in $$(SPECFPRATE); do cat $$$$t/logs/run-$(1).sh.timelog; echo ""; done
-	for t in $$(SPECFPRATE); do cat $$$$t/logs/run-$(1).sh.timelog | grep "# elapsed in second" | sed -e "s/#.*/\t$$$$t/"; done
+	@python scripts/report.py --input $(1) --spec fp --run-tag "$(RUN_TAG)"
 
 endef
 
