@@ -6,6 +6,6 @@
 **/*_s
 scripts/*
 !scripts/collect.sh
-!scripts/run-template.sh
+!scripts/report.py
 !scripts/gen_diff.py
 **/logs
