@@ -227,13 +227,21 @@ xerfft.F90)
 
 SPEC_CFLAGS += -DSPEC -DNDEBUG -Isrc -Isrc/netcdf/include -Isrc/inc -DSTUBMPI -DSPEC_AUTO_SUPPRESS_OPENMP -DSPEC_AUTO_BYTEORDER=0x12345678 -DSPEC_CASE_FLAG -DSPEC_LP64
 SPEC_CXXFLAGS +=
+ifneq (,$(findstring ifort, $(FC)))
+SPEC_FFLAGS += -I. -Inetcdf/include -Iinc -DSTUBMPI -DSPEC_AUTO_SUPPRESS_OPENMP -convert big_endian
+else
 SPEC_FFLAGS += -I. -Inetcdf/include -Iinc -DSTUBMPI -DSPEC_AUTO_SUPPRESS_OPENMP -fconvert=big-endian
 ifeq (,$(findstring flang, $(FC)))
 SPEC_FFLAGS += -ffree-line-length-none -fallow-invalid-boz
 endif
+endif
 SPECCPPFLAGS += -DSPEC -DNDEBUG -DSTUBMPI -DSPEC_AUTO_SUPPRESS_OPENMP -w -m literal.pm -I. -I./inc -I./netcdf/include -DDM_PARALLEL -DEM_CORE=1 -DNMM_CORE=0 -DNMM_MAX_DIM=2600 -DCOAMPS_CORE=0 -DDA_CORE=0 -DEXP_CORE=0 -DIWORDSIZE=4 -DDWORDSIZE=8 -DRWORDSIZE=4 -DLWORDSIZE=4 -DNETCDF -DINTIO -DCONFIG_BUF_LEN=32768 -DMAX_DOMAINS_F=21 -DNMM_NEST=0 -DMAX_HISTORY=25 -DSPEC_AUTO_SUPPRESS_OPENMP -DSPEC_LP64
 LD_FORTRAN = 1
+ifneq (,$(findstring ifort, $(FC)))
+SPEC_LDFLAGS = -convert big_endian
+else
 SPEC_LDFLAGS = -fconvert=big-endian
+endif
 
 include ../Makefile.apps
 include ../Makefile.run

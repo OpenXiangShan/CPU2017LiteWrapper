@@ -76,8 +76,15 @@ CXXOPTIMIZE_FLAGS = $(OPTIMIZE)
 FPPTIMIZE_FLAGS = $(OPTIMIZE)
 BASE_CFLAGS   += -DSPEC -DSPEC_LINUX_X64 -DSPEC_LINUX -std=c99 -MMD -fno-strict-aliasing -Wno-implicit-int -Wno-int-conversion -Wno-incompatible-pointer-types -Wno-implicit-function-declaration $(SPECIFIC_FLAG) 
 BASE_CXXFLAGS += $(CFLAGS) -std=c++03
+# ICC Classic compatibility: provide _FloatN typedefs and builtins for newer glibc
+ifneq (,$(findstring icc, $(CC)))
+BASE_CFLAGS   += -include $(SPEC_LITE)/scripts/icc_float_compat.h
+BASE_CXXFLAGS += -include $(SPEC_LITE)/scripts/icc_float_compat.h -std=c++14
+endif
 ifeq (,$(findstring flang, $(FC)))
+ifeq (,$(findstring ifort, $(FC)))
 BASE_FFLAGS  += -fallow-argument-mismatch
+endif
 endif
 BASE_FFLAGS  += -DSPEC -DNDEBUG -DSPEC_AUTO_SUPPRESS_OPENMP -DSPEC_LP64 -DSPEC_LINUX $(SPECIFIC_FLAG)
 BASE_LDFLAGS  +=

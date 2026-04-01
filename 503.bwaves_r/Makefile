@@ -4,7 +4,9 @@ fill1.F fill2.F)
 SPEC_CFLAGS +=
 SPEC_CXXFLAGS +=
 ifeq (,$(findstring flang, $(FC)))
+ifeq (,$(findstring ifort, $(FC)))
 SPEC_FFLAGS += -fallow-argument-mismatch
+endif
 endif
 SPECCPPFLAGS += -DSPEC -DNDEBUG -w -DSPEC_AUTO_SUPPRESS_OPENMP -DSPEC_LP64
 LD_FORTRAN = 1
